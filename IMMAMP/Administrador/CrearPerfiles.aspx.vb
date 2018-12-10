@@ -9,7 +9,7 @@ Partial Class Admintrador_CrearPerfiles
     End Sub
 
     Sub CargaDatosEstudiante()
-        Dim nombre As String = Request.Form("nombre")
+        Dim nombres As String = Request.Form("nombre")
         Dim aPaterno As String = Request.Form("apellidoP")
         Dim aMaterno As String = Request.Form("apellidoM")
         Dim email As String = Request.Form("email")
