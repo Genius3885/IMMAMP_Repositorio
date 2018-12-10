@@ -1,0 +1,86 @@
+﻿.headerindex {
+    background-image: url('../images/LogoIndex.jpg');
+    margin: 17px 0px 0px 100px;
+    background-repeat: no-repeat;
+    height: 98px;
+    z-index: auto;
+    position: fixed;
+}
+
+ul#menu-horizontal li {
+    float: left;
+    display: inline;
+    position: relative;
+    border-radius: 7px;
+    height: 38px;
+    text-align: center
+}
+
+ul#menu-horizontal ul {
+    display: none;
+    position: relative;
+    top: 24;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+}
+
+    ul#menu-horizontal ul li {
+        display: block !important;
+    }
+
+ul#menu-horizontal li:hover ul {
+    display: none;
+}
+
+ul#menu-horizontal li:hover ul {
+    display: block;
+}
+
+#menu-horizontal {
+    width: 500px;
+    margin: 0 auto;
+}
+
+    #menu-horizontal li {
+        margin: 0 1px;
+        width: 98px;
+        min-height: 19px;
+        text-align: center;
+        background: #BBB;
+        list-style: none;
+        padding: 2px 0;
+    }
+
+        /* y otro poquito por aquí.. */
+
+        #menu-horizontal li:hover {
+            background: #C5014F;
+        }
+
+        #menu-horizontal li a {
+            font: 13px Arial, sans-serif;
+            color: #FFF;
+            text-decoration: double;
+            text-align: center;
+        }
+
+        #menu-horizontal li ul li {
+            float: none;
+            width: 98px;
+            margin: 1px 0;
+        }
+
+
+#menu .has-sub {
+    position: relative;
+}
+
+
+.imagen:hover {
+    filter: sepia(60%);
+}
+img.derecha {
+    float: right;
+}

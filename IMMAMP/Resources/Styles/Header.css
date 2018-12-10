@@ -1,0 +1,40 @@
+﻿
+.header {
+    background: transparent;
+    width: 100%;
+    height: 100px;
+    z-index: auto;
+    position: fixed;
+}
+.imgmusica {
+    background-image: url('../images/kdkdk.png');
+    margin: 1px 0px 0px 474px;
+    background-repeat: no-repeat;
+    height: 135px;
+}
+
+.footer {
+    background-image: url('../images/footer1.png');
+    margin: 1px 0px 0px -10px;
+    background-repeat: no-repeat;
+    height: 154px;
+}
+.btnlog {
+    width: 121px;
+    height: 38px;
+    background-color: #0332a02e;
+    border-radius: 10px;
+    float: right;
+    margin-top: -120px;
+    margin-right: 83px;
+}
+.headerLogo {
+    background-image: url('../images/immamplogo1.jpg');
+    margin: 22px 0px 0px 100px;
+    background-repeat: no-repeat;
+    height: 98px;
+    width: -1px;
+    z-index: auto;
+    position: fixed;
+}
+
