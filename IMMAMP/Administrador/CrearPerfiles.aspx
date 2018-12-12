@@ -413,6 +413,7 @@
                         </div>
                     </div>
                 </div>
+                </div>
         </form>
     </div>
     <%--Script para la carga de dias y años de diferentes campos--%>
