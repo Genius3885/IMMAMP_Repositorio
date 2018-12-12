@@ -1,16 +1,18 @@
 ﻿
 .header {
-    background: transparent;
+    background: #fbfdff;
     width: 100%;
-    height: 100px;
-    z-index: auto;
+    height: 156px;
+    z-index: 100;
     position: fixed;
+    border-color: aqua 1rem;
 }
 .imgmusica {
     background-image: url('../images/kdkdk.png');
     margin: 1px 0px 0px 474px;
     background-repeat: no-repeat;
     height: 135px;
+    z-index: 100;
 }
 
 .footer {
@@ -34,7 +36,7 @@
     background-repeat: no-repeat;
     height: 98px;
     width: -1px;
-    z-index: auto;
+    z-index: 100;
     position: fixed;
 }
 

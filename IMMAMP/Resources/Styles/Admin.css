@@ -34,15 +34,17 @@ input[type="text"] {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     border-radius: 5px;
 }
+
 .select {
     width: 100%;
     font-size: 18px;
     font-weight: 300;
     text-align: left;
 }
+
 select.form-control {
     height: 40px;
     font-size: 18px;
@@ -52,11 +54,13 @@ select.form-control {
     margin-bottom: 20px;
     border-radius: 5px;
 }
+
 .btn-default {
     color: #333;
     background-color: #fff;
     border-color: #ccc;
 }
+
 .btn {
     display: inline-block;
     padding: 6px 12px;
@@ -89,12 +93,14 @@ select.form-control {
     height: 119px;
     margin-bottom: -52px;
 }
+
 .file1 {
     background-repeat: no-repeat;
     height: 135px;
     margin: 13px 0px 141px 329px;
     background-image: url('../images/adjuntar.png');
 }
+
 .crearUser {
     width: 162px;
     height: 41px;
@@ -102,4 +108,14 @@ select.form-control {
     border-radius: 5px;
     float: right;
     margin: -51px 592px 0px 0px
+}
+
+.error {
+    /*width: 162px;*/
+    height: 41px;
+    color: red;
+}
+
+.field {
+    height: auto;
 }
