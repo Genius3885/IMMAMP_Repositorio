@@ -5,11 +5,10 @@
     height: 156px;
     z-index: 100;
     position: fixed;
-    border-color: aqua 1rem;
+    border-bottom: 1px solid #dee2e6;
 }
 .imgmusica {
     background-image: url('../images/kdkdk.png');
-    margin: 1px 0px 0px 474px;
     background-repeat: no-repeat;
     height: 135px;
     z-index: 100;
@@ -27,12 +26,12 @@
     background-color: #0332a02e;
     border-radius: 10px;
     float: right;
-    margin-top: -120px;
+    margin-top: 50px;
     margin-right: 83px;
 }
 .headerLogo {
     background-image: url('../images/immamplogo1.jpg');
-    margin: 22px 0px 0px 100px;
+    margin: 7px 0px 0px 100px;
     background-repeat: no-repeat;
     height: 98px;
     width: -1px;

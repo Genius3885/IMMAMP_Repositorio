@@ -26,7 +26,7 @@
 }
 
 input[type="text"] {
-    width: 50%;
+    /*width: 50%;*/
     font-weight: 300;
     text-align: left;
     height: 40px;
@@ -47,16 +47,13 @@ input[type="text"] {
 
 select.form-control {
     height: 40px;
-    font-size: 18px;
-    margin-left: 328px;
-    margin-right: auto;
+    font-size: 18px;   
     display: block;
-    margin-bottom: 20px;
     border-radius: 5px;
 }
 
 .btn-default {
-    color: #333;
+    crearUser color: #333;
     background-color: #fff;
     border-color: #ccc;
 }
@@ -97,7 +94,7 @@ select.form-control {
 .file1 {
     background-repeat: no-repeat;
     height: 135px;
-    margin: 13px 0px 141px 329px;
+    /*margin: 13px 0px 141px 329px;*/
     background-image: url('../images/adjuntar.png');
 }
 
@@ -106,16 +103,26 @@ select.form-control {
     height: 41px;
     background-color: #0332a02e;
     border-radius: 5px;
-    float: right;
-    margin: -51px 592px 0px 0px
+    margin: -51px 592px 0px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .error {
     /*width: 162px;*/
-    height: 41px;
+    height: 20px;
     color: red;
 }
 
 .field {
     height: auto;
+}
+#footer {
+    background: #dee2e6;
+    border-top: 1px solid #dee2e6;
+    font-size: 0.9em;
+    margin-top: 50px;
+    position: relative;
+    clear: both;
 }
