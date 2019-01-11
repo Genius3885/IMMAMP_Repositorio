@@ -12,7 +12,7 @@
     else {
         campoError.style.display = "none";
     }
-    if (correo.include("@")) {
+    if (correo.include("")) {
 
         mensajeError = "El campo " + idCampo + " esta vacio"
         campoError.style.display = "block";

@@ -63,7 +63,7 @@
                 <div class="col-md-8 offset-2  col-xs-12 form-group">
 
                     <div class="col-md-6 offset-3 col-xs-12 form-group">
-                        <div class="field"> 
+                        <div class="field">
                             <input type="text" style="text-transform: uppercase;" name="nombre" id="nombre" placeholder="NOMBRE" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
                         </div>
                         <div class="error" id="nombreError"></div>
@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="col-md-6 offset-3 col-xs-12 form-group">
-                        <input type="text" style="text-transform: uppercase;" name="email" id="email" placeholder="CORREO ELECTRÓNICO" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
+                        <input type="text" name="email" id="email" placeholder="CORREO ELECTRÓNICO" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
                         <div>
                             <div class="error light" id="emailError"></div>
                         </div>
@@ -97,7 +97,7 @@
 
                     <div class="col-md-6 offset-3">
                         <div class="field col-md-6" style="padding-left: initial;">
-                            <asp:DropDownList ID="genero" name="generoUser" runat="server" onchange="ShowLabel(this.id);validacion(this.id,'lista','género',0)" class="form-control">
+                            <asp:DropDownList ID="genero" name="generoUser" runat="server" class="form-control">
                                 <asp:ListItem Value='select'>GÉNERO</asp:ListItem>
                                 <asp:ListItem Value='M'>MASCULINO</asp:ListItem>
                                 <asp:ListItem Value='F'>FEMENINO</asp:ListItem>
@@ -133,9 +133,9 @@
                     </div>--%>
 
                     <div style="width: 100%;">
-                       
+
                         <div class="col-md-6 offset-3 col-xs-12">
-                             <h2 style="color: #092740c4; text-align: center; font-size: 30px;">Fecha Nacimiento</h2>
+                            <h2 style="color: #092740c4; text-align: center; font-size: 30px;">Fecha Nacimiento</h2>
                             <div class="col-md-4">
                                 <div class="field">
                                     <select name="dia" id="dia" class="form-control" runat="server">
@@ -337,19 +337,18 @@
                             <input type="text" name="noInt" id="noInt" placeholder="NO. INT" class="form-control" maxlength="10" onkeypress="return validaLetraNumeroEscrito(event)" onblur="validaformulario(this.id);" />
                             <div class="error light" id="noIntaError"></div>
                         </div>
-
                         <div class="col-md-6 offset-3 col-xs-12">
-                            <asp:TextBox runat="server" type="text" name="CPostal" ID="CPostal" placeholder="CÓDIGO POSTAL" class="form-control" MaxLength="5" onblur="Cp();"> </asp:TextBox>
-
+                            <asp:TextBox runat="server" type="text" name="CPostal" ID="CPostal" placeholder="CÓDIGO POSTAL" class="form-control" MaxLength="5" onblur="CargaCP(); Cp();"> </asp:TextBox>
                             <div class="error light" id="CPostalaerror" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                         </div>
 
                         <!--Colonia-->
                         <div class="col-md-6 offset-3">
-                            <input type="hidden" name="colonia2" id="colonia2" />
-                            <select name="colonia" id="colonia" class="form-control" style="margin-left: initial;">
-                                <option value="select">COLONIA</option>
-                            </select>
+                            <div class="field">
+                                <select name="colonia" id="colonia" class="form-control">
+                                    <option value='select'>Selecciona Colonia</option>
+                                </select>
+                            </div>
                             <div class="error light" id="coloniaaError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                         </div>
 
@@ -359,49 +358,15 @@
                         <%--Municipio--%>
                         <div class="col-md-6 offset-3 col-xs-12">
                             <input type="hidden" name="municipio2" id="municipio2" />
-                            <select name="municipio" id="municipio" class="form-control" style="margin-left: initial; text-transform: uppercase;">
-                                <option value="select">MUNICIPIO</option>
-                            </select>
+                            <input type="text" value="MUNICIPIO" name="municipio" id="municipio" class="form-control" style="margin-left: initial; text-transform: uppercase;" />
+
                             <div class="error light" id="municipioaError"></div>
                         </div>
                         <%--Estado--%>
                         <div class="col-md-6 offset-3 col-xs-12">
                             <input type="hidden" name="estado2" id="estado2" />
-                            <select name="estado" id="estado" class="form-control" style="margin-left: initial;">
-                                <option value="select">ESTADO</option>
-                                <option value="AGUASCALIENTES">AGUASCALIENTES</option>
-                                <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
-                                <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
-                                <option value="CAMPECHE">CAMPECHE</option>
-                                <option value="CHIAPAS">CHIAPAS</option>
-                                <option value="CHIHUAHUA">CHIHUAHUA</option>
-                                <option value="COAHUILA">COAHUILA</option>
-                                <option value="COLIMA">COLIMA</option>
-                                <option value="CDMX">CDMX</option>
-                                <option value="DURANGO">DURANGO</option>
-                                <option value="MEXICO">ESTADO DE MÉXICO</option>
-                                <option value="GUANAJUATO">GUANAJUATO</option>
-                                <option value="GUERRERO">GUERRERO</option>
-                                <option value="HIDALGO">HIDALGO</option>
-                                <option value="JALISCO">JALISCO</option>
-                                <option value="MICHOACAN">MICHOACÁN</option>
-                                <option value="MORELOS">MORELOS</option>
-                                <option value="NAYARIT">NAYARIT</option>
-                                <option value="NUEVO LEON">NUEVO LEÓN</option>
-                                <option value="OAXACA">OAXACA</option>
-                                <option value="PUEBLA">PUEBLA</option>
-                                <option value="QUERETARO">QUERÉTARO</option>
-                                <option value="QUINTANA ROO">QUINTANA ROO</option>
-                                <option value="SAN LUIS POTOSI">SAN LUIS POTOSÍ</option>
-                                <option value="SINALOA">SINALOA</option>
-                                <option value="SONORA">SONORA</option>
-                                <option value="TABASCO">TABASCO</option>
-                                <option value="TAMAULIPAS">TAMAULIPAS</option>
-                                <option value="TLAXCALA">TLAXCALA</option>
-                                <option value="VERACRUZ">VERACRUZ</option>
-                                <option value="YUCATAN">YUCATÁN</option>
-                                <option value="ZACATECAS">ZACATECAS</option>
-                            </select>
+                            <input type="text" value="ESTADO" name="estado" id="estado" class="form-control" style="margin-left: initial;" />
+
                             <div class="error light" id="estadoError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                         </div>
 
@@ -481,7 +446,7 @@
                                 <div class="col-md-4 form-group">
 
                                     <div class="field">
-                                        <input type="text" name="CPostal" id="CPostalIgle" placeholder="CÓDIGO POSTAL" class="form-control" maxlength="5" />
+                                        <asp:TextBox runat="server" type="text" name="CPostalIgle" ID="CPostalI" placeholder="CÓDIGO POSTAL" class="form-control" MaxLength="5" onblur="CpIglesia(); ColoniasIgle();"> </asp:TextBox>
                                     </div>
                                     <div class="error light" id="CPostalerror"></div>
                                 </div>
@@ -489,11 +454,13 @@
                             <!--Colonia-->
                             <%--<div class="col-xs-12 form-group">--%>
 
-                            <div class="field">
-                                <input type="hidden" name="colonia2" id="colonia2Igle" />
-                                <select name="colonia" id="coloniaIgle" class="form-control">
-                                    <option value="select">COLONIA</option>
-                                </select>
+                            <div class="col-md-10 offset-1">
+                                <div class="field">
+                                    <select name="colonia2Igle" id="colonia2Igle" class="form-control">
+                                        <option value='select'>Selecciona Colonia</option>
+                                    </select>
+                                </div>
+                                <div class="error light" id="colonia2IgleError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                             </div>
                             <div class="error light" id="coloniaError"></div>
                             <%--</div>--%>
@@ -503,52 +470,18 @@
                                 <div class="col-md-6 form-group">
 
                                     <div class="field">
-                                        <input type="hidden" name="municipio2" id="municipio2Igle1" />
-                                        <select name="municipio" id="municipio2Igle" class="form-control">
-                                            <option value="select">MUNICIPIO</option>
-                                        </select>
+                                        <input type="hidden" name="municipio2Igle" id="municipio2Igle" />
+                                        <input type="text" value="MUNICIPIO" name="municipio" id="municipioIgle" class="form-control" style="margin-left: initial; text-transform: uppercase;" />
+
+                                        <div class="error light" id="municipioIgleError"></div>
                                     </div>
-                                    <div class="error light" id="municipioError"></div>
                                 </div>
                                 <%--Estado--%>
                                 <div class="field col-md-6 col-xs-12">
-                                    <input type="hidden" name="estado2" id="estado2Igle" />
-                                    <select name="estado1" id="estado1" class="form-control">
-                                        <option value="select">ESTADO</option>
-                                        <option value="AGUASCALIENTES">AGUASCALIENTES</option>
-                                        <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
-                                        <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
-                                        <option value="CAMPECHE">CAMPECHE</option>
-                                        <option value="CHIAPAS">CHIAPAS</option>
-                                        <option value="CHIHUAHUA">CHIHUAHUA</option>
-                                        <option value="COAHUILA">COAHUILA</option>
-                                        <option value="COLIMA">COLIMA</option>
-                                        <option value="CDMX">CDMX</option>
-                                        <option value="DURANGO">DURANGO</option>
-                                        <option value="MEXICO">ESTADO DE MÉXICO</option>
-                                        <option value="GUANAJUATO">GUANAJUATO</option>
-                                        <option value="GUERRERO">GUERRERO</option>
-                                        <option value="HIDALGO">HIDALGO</option>
-                                        <option value="JALISCO">JALISCO</option>
-                                        <option value="MICHOACAN">MICHOACÁN</option>
-                                        <option value="MORELOS">MORELOS</option>
-                                        <option value="NAYARIT">NAYARIT</option>
-                                        <option value="NUEVO LEON">NUEVO LEÓN</option>
-                                        <option value="OAXACA">OAXACA</option>
-                                        <option value="PUEBLA">PUEBLA</option>
-                                        <option value="QUERETARO">QUERÉTARO</option>
-                                        <option value="QUINTANA ROO">QUINTANA ROO</option>
-                                        <option value="SAN LUIS POTOSI">SAN LUIS POTOSÍ</option>
-                                        <option value="SINALOA">SINALOA</option>
-                                        <option value="SONORA">SONORA</option>
-                                        <option value="TABASCO">TABASCO</option>
-                                        <option value="TAMAULIPAS">TAMAULIPAS</option>
-                                        <option value="TLAXCALA">TLAXCALA</option>
-                                        <option value="VERACRUZ">VERACRUZ</option>
-                                        <option value="YUCATAN">YUCATÁN</option>
-                                        <option value="ZACATECAS">ZACATECAS</option>
-                                    </select>
-                                    <div class="error light" id="estado1Error"></div>
+                                    <input type="hidden" name="estado2Igle" id="estado2Igle" />
+                                    <input type="text" value="ESTADO" name="estado" id="estadoIgle" class="form-control" style="margin-left: initial;" />
+
+                                    <div class="error light" id="estadoIgleError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                                 </div>
                             </div>
 
@@ -572,11 +505,10 @@
 
     <!-- #include file ="/Globales/footer.aspx" -->
     <script async="async">
-    function Cp() {
+        function Cp() {
             var CodPos = document.getElementById("CPostal").value;
             $.ajax({
                 type: "POST", // Tipo de llamada
-                //url: "Index2.aspx/verificarVigPoliza",
                 url: "CrearPerfiles.aspx/cargaCp",
                 //Dirección del WebMethod, o sea, Página.aspx/Método *NOTA: La función debe estar declarada como <WebMethod>
                 data: "{CPostal: '" + CodPos + "'}",   //Parámetros para pasarle al método
@@ -584,22 +516,88 @@
                 async: false,
                 cache: false,//Tipo de contenido
                 dataType: "json",
-                success: function resultado(msg) {
-                    var mensaje = msg.d[0]
-                    document.getElementById("renovacion").value = msg.d[1]
-                    document.getElementById("incisoRenovacion").value = msg.d[2]
-                    //if (mensaje == "") {
-                    //    document.getElementById("polizaError").style.display = "none";
-                    //    document.getElementById("btnCancelacion").disabled = false;
-                    //    llenarCampos();
-                    //} else {
-                    //    document.getElementById("polizaError").style.display = "block";
-                    //    document.getElementById("polizaError").innerHTML = mensaje;
-                    //    document.getElementById("btnCancelacion").disabled = true;
-                    //}
+                success: function resultado(Respuesta) {
+                    var mensaje = Respuesta.d[0];
+                    var mun = Respuesta.d[1];
+                    var estd = Respuesta.d[2];
+                    document.getElementById("municipio").value = Respuesta.d[1];
+                    document.getElementById("estado").value = Respuesta.d[2];
+
                 },
             });
         }
-        </script>
+
+    </script>
+    <script async="async">
+        function CargaCP() {
+            var CodPos = document.getElementById("CPostal").value;
+            $.ajax({
+                type: "POST", // Tipo de llamada
+                url: "CrearPerfiles.aspx/ConsultaColonias",
+                //Dirección del WebMethod, o sea, Página.aspx/Método *NOTA: La función debe estar declarada como <WebMethod>
+                data: "{CPostal: '" + CodPos + "'}",   //Parámetros para pasarle al método
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                cache: false,//Tipo de contenido
+                dataType: "json",
+                success: resultado,
+
+            });
+            function resultado(msg) {
+                var html = msg.d;
+                $('#colonia').html("<option value='select'>Selecciona Colonia</option>")
+                $('#colonia').append(html)
+
+            }
+        }
+        //Carga direcciones Iglesia
+    </script>
+     <script async="async">
+        function CpIglesia() {
+            var CodPosI = document.getElementById("CPostalI").value;
+            $.ajax({
+                type: "POST", // Tipo de llamada
+                url: "CrearPerfiles.aspx/CargaDireccionesI",
+                //Dirección del WebMethod, o sea, Página.aspx/Método *NOTA: La función debe estar declarada como <WebMethod>
+                data: "{CPostalI: '" + CodPosI + "'}",   //Parámetros para pasarle al método
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                cache: false,//Tipo de contenido
+                dataType: "json",
+                success: function resultado(Respuesta) {
+                    var mensaje = Respuesta.d[0];
+                    var mun = Respuesta.d[1];
+                    var estd = Respuesta.d[2];
+                    document.getElementById("municipioIgle").value = Respuesta.d[1];
+                    document.getElementById("estadoIgle").value = Respuesta.d[2];
+
+                },
+            });
+        }
+
+    </script>
+    <script async="async">
+        function ColoniasIgle() {
+            var CodPosI = document.getElementById("CPostalI").value;
+            $.ajax({
+                type: "POST", // Tipo de llamada
+                url: "CrearPerfiles.aspx/ConsultaColoniasIgle",
+                //Dirección del WebMethod, o sea, Página.aspx/Método *NOTA: La función debe estar declarada como <WebMethod>
+                data: "{CPostalI: '" + CodPosI + "'}",   //Parámetros para pasarle al método
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                cache: false,//Tipo de contenido
+                dataType: "json",
+                success: resultado,
+
+            });
+            function resultado(msg) {
+                var html = msg.d;
+                $('#colonia2Igle').html("<option value='select'>Selecciona Colonia</option>")
+                $('#colonia2Igle').append(html)
+
+            }
+        }
+    </script>    
 </body>
 </html>
