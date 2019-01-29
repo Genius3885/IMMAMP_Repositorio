@@ -1,5 +1,5 @@
 ﻿function validaformulario(idCampo) {
-    var correo = document.getElementById("email").value;
+    var correo = document.getElementById(idCampo).value;
     var campoError = document.getElementById(idCampo + "Error");
     var mensajeError;
     var nom = document.getElementById(idCampo).value;
@@ -12,7 +12,7 @@
     else {
         campoError.style.display = "none";
     }
-    if (correo.include("")) {
+    if (correo == "") {
 
         mensajeError = "El campo " + idCampo + " esta vacio"
         campoError.style.display = "block";

@@ -67,34 +67,25 @@
                             <input type="text" style="text-transform: uppercase;" name="nombre" id="nombre" placeholder="NOMBRE" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
                         </div>
                         <div class="error" id="nombreError"></div>
-
                     </div>
-
                     <div class="col-md-6 offset-3 col-xs-12 form-group">
                         <div class="field">
                             <input type="text" style="text-transform: uppercase;" name="apellidoP" id="apellidoP" placeholder="APELLIDO PATERNO" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
                         </div>
-
                         <div class="error" id="apellidoPError"></div>
-
                     </div>
-
                     <div class="col-md-6 offset-3 col-xs-12 form-group">
-
                         <div class="field">
                             <input type="text" style="text-transform: uppercase;" name="apellidoM" id="apellidoM" placeholder="APELLIDO MATERNO" class="form-control" maxlength="100" onblur="validaformulario(this.id); " />
                         </div>
                         <div class="error" id="apellidoMError"></div>
-
                     </div>
-
                     <div class="col-md-6 offset-3 col-xs-12 form-group">
                         <input type="text" name="email" id="email" placeholder="CORREO ELECTRÓNICO" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
                         <div>
                             <div class="error light" id="emailError"></div>
                         </div>
                     </div>
-
                     <div class="col-md-6 offset-3">
                         <div class="field col-md-6" style="padding-left: initial;">
                             <asp:DropDownList ID="genero" name="generoUser" runat="server" class="form-control">
@@ -104,7 +95,6 @@
                             </asp:DropDownList>
                             <div class="error light" id="generoUserError"></div>
                         </div>
-
                         <div class="field col-md-6" style="padding-right: initial;">
                             <input type="hidden" name="instrumento" id="instru" />
                             <asp:DropDownList runat="server" name="instrumento" ID="instrum" class="form-control" onchange="ShowLabel(this.id);validacion(this.id, 'lista', 'instrumento',1, 0)" Style="display: block;">
@@ -120,20 +110,7 @@
                             <div class="error light" id="instrumento"></div>
                         </div>
                     </div>
-
-
-                    <!-- Div para ocultar datos personales (Solo en el caso de generar Administrador)-->
-                    <%--<div class="col-md-6 offset-3 col-xs-12">
-                        <div class="col-md-12" style="text-align: center;">
-                            <h3 style="color: #092740c4; text-align: center; font-size: 30px;">Fecha de Nacimiento</h3>
-                            <div id="fenac">
-                                <input type="date"  name="fecha" class="form-group" style="border-radius: 5px; width: 157px; height: 38px;"/>
-                            </div>
-                        </div>
-                    </div>--%>
-
                     <div style="width: 100%;">
-
                         <div class="col-md-6 offset-3 col-xs-12">
                             <h2 style="color: #092740c4; text-align: center; font-size: 30px;">Fecha Nacimiento</h2>
                             <div class="col-md-4">
@@ -172,7 +149,6 @@
                                         <option value="30">30</option>
                                         <option value="31">31</option>
                                     </select>
-
                                 </div>
                                 <div class="error light" id="diaError"></div>
                             </div>
@@ -195,7 +171,6 @@
                                     </select>
                                     <div class="error light" id="mesError"></div>
                                 </div>
-
                             </div>
                             <div class="col-md-4">
                                 <div class="field">
@@ -287,34 +262,30 @@
                         </div>
                         <div class="col-md-4 offset-4 col-xs-12">
                             <input type="text" name="edad" id="edad" placeholder="Edad" maxlength="3" class="form-control" onblur="validaformulario(this.id);" />
-                            <%--<div style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;">--%>
+                            
                             <div class="error light" id="edadError"></div>
-                            <%--</div>--%>
+                            
                         </div>
                     </div>
-
-
-
-
-                    <%--Datos de Contacto--%>
+                    
                     <div class="col-md-12 col-xs-12">
                         <h2 style="color: #092740c4; text-align: center; font-size: 30px;">Datos Contacto</h2>
                         <%--Telefono y Celular--%>
                         <div class="col-md-6 offset-3 col-xs-12">
+                            <div class="field" style="height: 60px">
                             <input type="text" name="telefono" id="telefono" placeholder="TELÉFONO CASA (10 DÍGITOS)" maxlength="10" class="form-control" onblur="validaformulario(this.id);" />
-                            <div>
-                                <div class="error light" id="telefonoError"></div>
+                            <div class="error light" id="telefonoError"></div>
+
                             </div>
                         </div>
                         <%--Celular --%>
                         <div class="col-md-6 offset-3 col-xs-12">
-
-                            <div class="field">
+                            <div class="field" style="height: 60px">
                                 <input type="text" name="celular" id="celular" placeholder="CELULAR (10 DÍGITOS)" maxlength="10" class="form-control" onblur="validaformulario(this.id);" />
-                            </div>
                             <div class="error light" id="celularError"></div>
+                            </div>
+                            
                         </div>
-
                         <%--Direccion--%>
                         <%--Calle--%>
                         <div class="col-md-6 offset-3 col-xs-12">
@@ -325,14 +296,12 @@
                             <div class="error light" id="calleaError"></div>
                         </div>
                         <%--No Ext / Int / CP--%>
-
                         <div class="col-md-6 offset-3 col-xs-12">
                             <div class="field">
                                 <input type="text" name="noExt" id="noExt" placeholder="NO. EXT" class="form-control" maxlength="10" onkeypress="return validaLetraNumeroEscrito(event)" onblur="validaformulario(this.id);" />
                                 <div class="error light" id="noExtaError"></div>
                             </div>
                         </div>
-
                         <div class="col-md-6 offset-3 col-xs-12">
                             <input type="text" name="noInt" id="noInt" placeholder="NO. INT" class="form-control" maxlength="10" onkeypress="return validaLetraNumeroEscrito(event)" onblur="validaformulario(this.id);" />
                             <div class="error light" id="noIntaError"></div>
@@ -351,7 +320,6 @@
                             </div>
                             <div class="error light" id="coloniaaError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                         </div>
-
                         <%--</div>--%>
                         <!--Municipio y estado-->
                         <%--<div class="col-md-6 offset-3"  style="text-transform: uppercase;">--%>
@@ -359,18 +327,14 @@
                         <div class="col-md-6 offset-3 col-xs-12">
                             <input type="hidden" name="municipio2" id="municipio2" />
                             <input type="text" value="MUNICIPIO" name="municipio" id="municipio" class="form-control" style="margin-left: initial; text-transform: uppercase;" />
-
                             <div class="error light" id="municipioaError"></div>
                         </div>
                         <%--Estado--%>
                         <div class="col-md-6 offset-3 col-xs-12">
                             <input type="hidden" name="estado2" id="estado2" />
                             <input type="text" value="ESTADO" name="estado" id="estado" class="form-control" style="margin-left: initial;" />
-
                             <div class="error light" id="estadoError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                         </div>
-
-
                         <%--</div>--%>
                         <%--</div>--%>
                         <%--< div datos Iglesia>--%>
@@ -378,101 +342,86 @@
                             <h4 style="color: #092740c4; text-align: center; font-size: 30px;">Datos Iglesia</h4>
                             <%--<div class="col-md-6 col-xs-12 form-group">--%>
                             <div class="field">
-                                <input type="text" style="text-transform: uppercase;" class="form-control" name="nombreigle" id="nomigle" placeholder="NOMBRE IGLESIA" maxlength="100" onblur="validaformulario(this.id);" />
+                                <input type="text" style="text-transform: uppercase;" class="form-control" name="nombreigle" id="nombreigle" placeholder="NOMBRE IGLESIA" maxlength="100" onblur="validaformulario(this.id);" />
                                 <div class="error" id="igleError"></div>
                             </div>
                             <%--</div>--%>
                             <%--<div class="col-md-6 offset-3 col-xs-12 form-group">--%>
                             <div class="field">
-                                <input type="text" style="text-transform: uppercase;" name="NomPas" id="nompas" placeholder="NOMBRE PASTOR" class="form-control" maxlength="100" />
+                                <input type="text" style="text-transform: uppercase;" name="NomPas" id="NomPas" placeholder="NOMBRE PASTOR" class="form-control" maxlength="100" />
                                 <div class="error light" id="nompasError"></div>
                             </div>
-
                             <%--</div>--%>
                             <%--<div class="field col-md-4 col-xs-4 ">--%>
                             <div class="field">
                                 <asp:DropDownList ID="movi" name="movi" runat="server" CssClass="form-control">
                                     <asp:ListItem Value='select'>MOVIMIENTO</asp:ListItem>
-                                    <asp:ListItem Value='0'>ICIAR</asp:ListItem>
-                                    <asp:ListItem Value='1'>APOSTOLICO</asp:ListItem>
-                                    <asp:ListItem Value='1'>PENTECOSTAL</asp:ListItem>
-                                    <asp:ListItem Value='1'>PRESBITERIANO</asp:ListItem>
-                                    <asp:ListItem Value='1'>METODISTA</asp:ListItem>
-                                    <asp:ListItem Value='1'>INDEPENDIENTE</asp:ListItem>
+                                    <asp:ListItem Value='ICIAR'>ICIAR</asp:ListItem>
+                                    <asp:ListItem Value='APOSTOLICO'>APOSTOLICO</asp:ListItem>
+                                    <asp:ListItem Value='PENTECOSTAL'>PENTECOSTAL</asp:ListItem>
+                                    <asp:ListItem Value='PRESBITERIANO'>PRESBITERIANO</asp:ListItem>
+                                    <asp:ListItem Value='METODISTA'>METODISTA</asp:ListItem>
+                                    <asp:ListItem Value='INDEPENDIENTE'>INDEPENDIENTE</asp:ListItem>
                                 </asp:DropDownList>
                                 <div class="error light" id="moviError"></div>
                             </div>
-                            <%--</div>--%>
-
-
-                            <%--<div class="col-md-12 form-group">--%>
-                            <%--<div class="col-md-12 form-group">--%>
+                             <div class="field">
+                                <div class="field">
+                                    <input type="text" name="TelPastor" id="TelPastor" placeholder="TELÉFONO PASTOR (10 DÍGITOS)" maxlength="10" class="form-control" />
+                                </div>
+                                <div class="error light" id="telefonoPasError"></div>
+                            </div>
                             <div class="field">
                                 <div class="field">
-                                    <input type="text" name="telefono" id="telIgle" placeholder="TELÉFONO IGLESIA (10 DÍGITOS)" maxlength="10" class="form-control" />
+                                    <input type="text" name="telIgle" id="telIgle" placeholder="TELÉFONO IGLESIA (10 DÍGITOS)" maxlength="10" class="form-control" />
                                 </div>
                                 <div class="error light" id="telefonoIError"></div>
                             </div>
-                            <%--</div>--%>
-
-                            <%--Direccion--%>
-                            <%--Calle--%>
-                            <%-- <div class="col-xs-12 form-group">
-                                    <div class="col-xs-12 form-group">--%>
 
                             <div class="field">
-                                <input type="text" name="calle" id="calleIgle" placeholder="CALLE" class="form-control" maxlength="100" />
+                                <input type="text" name="calcalleIglele" id="calleIgle" placeholder="CALLE IGLESIA" class="form-control" maxlength="100" />
                                 <div class="error light" id="calleIError"></div>
                             </div>
-
-                            <%-- </div>
-                                </div>--%>
                             <%--No Ext / Int / CP--%>
                             <div style="width: 100%;">
                                 <div class="col-md-4">
-
                                     <div class="field">
-                                        <input type="text" name="noExt" id="noExtIgle" placeholder="NO. EXT" class="form-control" maxlength="10" />
+                                        <input type="text" name="noExtIgle" id="noExtIgle" placeholder="NO. EXT IGLESIA" class="form-control" maxlength="10" />
                                     </div>
                                     <div class="error light" id="noExtIError"></div>
                                 </div>
                                 <div class="col-md-4 form-group">
 
                                     <div class="field">
-                                        <input type="text" name="noInt" id="noIntIgle" placeholder="NO. INT" class="form-control" maxlength="10" />
+                                        <input type="text" name="noIntIgle" id="noIntIgle" placeholder="NO. INT" class="form-control" maxlength="10" />
                                     </div>
                                     <div class="error light" id="noIntError"></div>
                                 </div>
                                 <div class="col-md-4 form-group">
-
                                     <div class="field">
-                                        <asp:TextBox runat="server" type="text" name="CPostalIgle" ID="CPostalI" placeholder="CÓDIGO POSTAL" class="form-control" MaxLength="5" onblur="CpIglesia(); ColoniasIgle();"> </asp:TextBox>
+                                        <asp:TextBox runat="server" type="text" name="CPostalI" ID="CPostalI" placeholder="CÓDIGO POSTAL" class="form-control" MaxLength="5" onblur="CpIglesia(); ColoniasIgle();"> </asp:TextBox>
                                     </div>
                                     <div class="error light" id="CPostalerror"></div>
                                 </div>
                             </div>
                             <!--Colonia-->
                             <%--<div class="col-xs-12 form-group">--%>
-
                             <div class="col-md-10 offset-1">
                                 <div class="field">
-                                    <select name="colonia2Igle" id="colonia2Igle" class="form-control">
+                                    <select name="coloniaIgle" id="coloniaIgle" class="form-control">
                                         <option value='select'>Selecciona Colonia</option>
                                     </select>
                                 </div>
                                 <div class="error light" id="colonia2IgleError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                             </div>
-                            <div class="error light" id="coloniaError"></div>
                             <%--</div>--%>
                             <!--Municipio y estado-->
                             <div class="col-md-12 col-xs-4 form-group">
                                 <%--Municipio--%>
                                 <div class="col-md-6 form-group">
-
                                     <div class="field">
                                         <input type="hidden" name="municipio2Igle" id="municipio2Igle" />
-                                        <input type="text" value="MUNICIPIO" name="municipio" id="municipioIgle" class="form-control" style="margin-left: initial; text-transform: uppercase;" />
-
+                                        <input type="text" value="MUNICIPIO" name="municipioIgle" id="municipioIgle" class="form-control" style="margin-left: initial; text-transform: uppercase;" />
                                         <div class="error light" id="municipioIgleError"></div>
                                     </div>
                                 </div>
@@ -480,11 +429,9 @@
                                 <div class="field col-md-6 col-xs-12">
                                     <input type="hidden" name="estado2Igle" id="estado2Igle" />
                                     <input type="text" value="ESTADO" name="estado" id="estadoIgle" class="form-control" style="margin-left: initial;" />
-
                                     <div class="error light" id="estadoIgleError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                                 </div>
                             </div>
-
                             <div class="col-md-12">
                                 <div class="file1" style="width: 87%; margin-left: auto; margin-right: auto;">
                                     <input type="file" id="DocumentoRecot" name="DocumentoRecot" onblur="validacion(this.id,'vacio','Documento',0);" class="width:100px;color:#446655;display: inline;" runat="server" style="width: 293px; opacity: 0; height: 89px;" />
@@ -498,6 +445,7 @@
                             <%--</div>--%>
                         </div>
                     </div>
+                </div>
                 </div>
         </form>
     </div>
