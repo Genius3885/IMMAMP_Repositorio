@@ -187,9 +187,9 @@ Partial Class Admintrador_CrearPerfiles
                 Dim command3 As New SqlCommand(sql, connection3)
                 command3.Parameters.Add("@Nombre", SqlDbType.VarChar)
                 command3.Parameters("@Nombre").Value = nompas
-                command3.Parameters.Add("@Fijo", SqlDbType.VarChar)
+                command3.Parameters.Add("@Fijo", SqlDbType.Int)
                 command3.Parameters("@Fijo").Value = telIgle
-                command3.Parameters.Add("@Celular", SqlDbType.VarChar)
+                command3.Parameters.Add("@Celular", SqlDbType.Int)
                 command3.Parameters("@Celular").Value = telpastor
                 If telIgle = Nothing Then
                     telIgle = "'SIN NUMERO'"
@@ -207,6 +207,7 @@ Partial Class Admintrador_CrearPerfiles
                 End Try
             End Using
         End Using
+        Response.Redirect("../Administrador/AlumnosCreado.aspx")
     End Sub
     'LLENADO DE DATOS DEL CONTACTO Colonias
     <WebMethod>

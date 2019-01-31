@@ -37,7 +37,7 @@
             document.getElementById("btnProf").className = "btn btn-circulo";
             document.getElementById("btnAdmin").className = "btn btn-circle";
         }
-        else if (variable == "2") { //Admin            
+        else if (variable == "2") { //Menor Edad            
             document.getElementById("apellidoM").style.display = "block";
             document.getElementById("instrum").style.display = "none";
             document.getElementById("btnAlum").className = " btn btn-circle";
@@ -237,24 +237,24 @@
                                         <option value="1994">1994</option>
                                         <option value="1995">1995</option>
                                         <option value="1996">1996</option>
-                                        <option value="1996">1997</option>
-                                        <option value="1996">1998</option>
-                                        <option value="1996">1999</option>
-                                        <option value="1996">2000</option>
-                                        <option value="1996">2001</option>
-                                        <option value="1996">2002</option>
-                                        <option value="1996">2003</option>
-                                        <option value="1996">2004</option>
-                                        <option value="1996">2005</option>
-                                        <option value="1996">2006</option>
-                                        <option value="1996">2007</option>
-                                        <option value="1996">2008</option>
-                                        <option value="1996">2009</option>
-                                        <option value="1996">2010</option>
-                                        <option value="1996">2011</option>
-                                        <option value="1996">2012</option>
-                                        <option value="1996">2013</option>
-                                        <option value="1996">2014</option>
+                                        <option value="1997">1997</option>
+                                        <option value="1998">1998</option>
+                                        <option value="1999">1999</option>
+                                        <option value="2000">2000</option>
+                                        <option value="2001">2001</option>
+                                        <option value="2002">2002</option>
+                                        <option value="2003">2003</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                        <option value="2006">2006</option>
+                                        <option value="2007">2007</option>
+                                        <option value="2008">2008</option>
+                                        <option value="2009">2009</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
                                     </select>
                                 </div>
                                 <div class="error light" id="anioError"></div>
@@ -428,7 +428,7 @@
                                 <%--Estado--%>
                                 <div class="field col-md-6 col-xs-12">
                                     <input type="hidden" name="estado2Igle" id="estado2Igle" />
-                                    <input type="text" value="ESTADO" name="estado" id="estadoIgle" class="form-control" style="margin-left: initial;" />
+                                    <input type="text" value="ESTADO" name="estadoIgle" id="estadoIgle" class="form-control" style="margin-left: initial;" />
                                     <div class="error light" id="estadoIgleError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                                 </div>
                             </div>
@@ -438,7 +438,7 @@
                                     <div style="display: none;" class="error light" id="DocumentoRecotError"></div>
                                 </div>
                                 <div class="col-md-12" style="margin-top: 50px;">
-                                    <asp:Button runat="server" type="button" ID="crearUser" class="crearUser" value="CrearAlumno" OnClick="CargaDatosEstudiante" Text="Crear Alumno"></asp:Button>
+                                    <asp:Button runat="server" type="button" ID="crearUser" class="crearUser" value="CrearAlumno" OnClick="CargaDatosEstudiante" Onblur="" Text="Crear Alumno"></asp:Button>
                                 </div>
                             </div>
 
@@ -541,8 +541,8 @@
             });
             function resultado(msg) {
                 var html = msg.d;
-                $('#colonia2Igle').html("<option value='select'>Selecciona Colonia</option>")
-                $('#colonia2Igle').append(html)
+                $('#coloniaIgle').html("<option value='select'>Selecciona Colonia</option>")
+                $('#coloniaIgle').append(html)
 
             }
         }
