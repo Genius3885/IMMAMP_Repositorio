@@ -109,7 +109,9 @@ Partial Class Admintrador_CrearPerfiles
         estadoIgle = Request.Form("estadoIgle")
         Docurecot = Request.Form("DocumentoRecot")
         'VALIDACION CP AMBOS
-
+        If edad <= 18 Then
+            edad = Request.Form("edad") & "|" & "MENOR EDAD"
+        End If
         'Conexion a la base de datos de IMMAMP haciendo un insert a la tabla de estudiantes
         Dim sql As String
         Using connection As New SqlConnection(CONEXION)
@@ -168,9 +170,9 @@ Partial Class Admintrador_CrearPerfiles
                 command2.Parameters.Add("@Colonia", SqlDbType.VarChar)
                 command2.Parameters("@Colonia").Value = colonia2Igle
                 command2.Parameters.Add("@Municipio", SqlDbType.VarChar)
-                command2.Parameters("@Municipio").Value = CodPostalI
+                command2.Parameters("@Municipio").Value = municipioIgle
                 command2.Parameters.Add("@Cp", SqlDbType.VarChar)
-                command2.Parameters("@Cp").Value = municipioIgle
+                command2.Parameters("@Cp").Value = CodPostalI
                 command2.Parameters.Add("@Estado", SqlDbType.VarChar)
                 command2.Parameters("@Estado").Value = estadoIgle
                 Try

@@ -53,12 +53,12 @@
         <form runat="server">
             <div style="padding-top: 200px;">
                 <h1 style="color: #092740c4; text-align: center">Crear Usuarios</h1>
-                <div id="opcionMultiple" style="aling-center: -63; margin-left: auto; margin-right: auto; display: block; width: 482px; margin-bottom: 20px;">
+               <%-- <div id="opcionMultiple" style="aling-center: -63; margin-left: auto; margin-right: auto; display: block; width: 482px; margin-bottom: 20px;">
                     <input type="hidden" runat="server" name="validaTipoPerfil" id="validaTipoPerfil" value="0" />
                     <a id="btnAlum" ng-click="hasPerfil1 = true; hasPerfil2 = false ; hasPerfil3 = false; hasPerfil4 = false; hasPerfil5 = false; hasPerfil6 = false;" ng-class="{'active':hasPerfil1}" class="btn btn-circle" onclick="validaTipoPerfil(0);document.getElementById('validaTipoPerfil').value='0'"></a><span>Alumno</span>
                     <a id="btnProf" ng-click="hasPerfil1 = false; hasPerfil2 = true ; hasPerfil3 = false ; hasPerfil4 = false ; hasPerfil5 = false ;  hasPerfil6 = false ;" ng-class="{'active':hasPerfil2}" class="btn btn-circle" onclick="validaTipoPerfil(1);document.getElementById('validaTipoPerfil').value='1'"></a><span>Profesor</span>
-                    <a id="btnAdmin" ng-click="hasPerfil1 = false; hasPerfil2 = false ; hasPerfil3 = true ; hasPerfil4 = false ; hasPerfil5 = false ; hasPerfil6 = false ;" ng-class="{'active':hasPerfil3}" class="btn btn-circle" onclick="validaTipoPerfil(2);document.getElementById('validaTipoPerfil').value='2'"></a><span>Administrador</span>
-                </div>
+                    <a id="btnAdmin" ng-click="hasPerfil1 = false; hasPerfil2 = false ; hasPerfil3 = true ; hasPerfil4 = false ; hasPerfil5 = false ; hasPerfil6 = false ;" ng-class="{'active':hasPerfil3}" class="btn btn-circle" onclick="validaTipoPerfil(2);document.getElementById('validaTipoPerfil').value='2'"></a><span>Menor De Edad</span>
+                </div>--%>
 
                 <div class="col-md-8 offset-2  col-xs-12 form-group">
 
@@ -86,6 +86,15 @@
                             <div class="error light" id="emailError"></div>
                         </div>
                     </div>
+                    <div class="col-md-6 offset-3 col-xs-12 form-group">
+                            <asp:DropDownList ID="DropDownList1" name="edoCivil" runat="server" class="form-control">
+                                <asp:ListItem Value='Estado Civil'>Estado Civil</asp:ListItem>
+                                <asp:ListItem Value='SOLTERO'>SOLTERO</asp:ListItem>
+                                <asp:ListItem Value='CASADO'>CASADO</asp:ListItem>
+                                <asp:ListItem Value='DIVORCIADO'>DIVORCIADO</asp:ListItem>
+                            </asp:DropDownList>
+                            <div class="error light" id="edoCivileRROR"></div>
+                        </div>
                     <div class="col-md-6 offset-3">
                         <div class="field col-md-6" style="padding-left: initial;">
                             <asp:DropDownList ID="genero" name="generoUser" runat="server" class="form-control">
@@ -105,7 +114,7 @@
                                 <asp:ListItem Value='GUITARRA'>GUITARRA</asp:ListItem>
                                 <asp:ListItem Value='BAJO'>BAJO</asp:ListItem>
                                 <asp:ListItem Value='FLAUTA'>FLAUTA TRANSVERSAL</asp:ListItem>
-                                <asp:ListItem Value='SAXOFO'>SAXOFON</asp:ListItem>
+                                <asp:ListItem Value='SAXOFON'>SAXOFON</asp:ListItem>
                             </asp:DropDownList>
                             <div class="error light" id="instrumento"></div>
                         </div>
@@ -270,6 +279,14 @@
                     
                     <div class="col-md-12 col-xs-12">
                         <h2 style="color: #092740c4; text-align: center; font-size: 30px;">Datos Contacto</h2>
+                        <div class="col-md-6 offset-3 col-xs-12">
+                            <asp:DropDownList ID="DropDownList2" name="edoCivil" runat="server" class="form-control">
+                                <asp:ListItem Value='EST/TUTOR'>¿Eres Estudiante o Tutor?</asp:ListItem>
+                                <asp:ListItem Value='ESTUDIANTE'>ESTUDIANTE</asp:ListItem>
+                                <asp:ListItem Value='TUTOR'>TUTOR</asp:ListItem>
+                            </asp:DropDownList>
+                            <div class="error light" id="EST/TUTORerror"></div>
+                        </div>
                         <%--Telefono y Celular--%>
                         <div class="col-md-6 offset-3 col-xs-12">
                             <div class="field" style="height: 60px">

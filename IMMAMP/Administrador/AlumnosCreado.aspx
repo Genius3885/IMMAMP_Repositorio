@@ -25,7 +25,7 @@
     <div class="main">
         <form runat="server">
             <div style="padding-top: 200px;" class="col-md-8 offset-2  col-xs-12 form-group">
-                <p style="font-size: 70px; color: black;">¡Se Ha creado el Registro de Manera Exitosa! </p>
+                <p style="font-size: 70px; color: black;">¡Se a creado el Registro de Manera Exitosa! </p>
                 <div class="col-md-12" style="margin-top: 50px;">
                     <asp:Button runat="server" type="button" ID="crearUser" class="crearUser" value="CrearAlumno" OnClick="Redireccion" Text="Crear Nuevo Alumno"></asp:Button>
                 </div>
