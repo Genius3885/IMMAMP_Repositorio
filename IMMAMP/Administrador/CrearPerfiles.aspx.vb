@@ -8,15 +8,24 @@ Partial Class Admintrador_CrearPerfiles
     Public errorr As String = ""
     Public count As String
     Public CONEXION As String = "Data Source = DAVE-PC; Initial Catalog = IMMAMP; Integrated Security = True"
+    'DATOS ALUMNO
     Public nombre As String
-    Public apeP As String
+    Public apellidop As String
     Public apellidoM As String
     Public email As String
-    Public status As String
+    Public Sem As String
+    Public EstadoCivil As String
+    Public ocup As String
     Public gen As String
+    Public BautH2o As String
+    Public BautES As String
+    Public AniosCongreg As String
     Public instrumento As String
     Public fechanac As String
     Public edad As String
+    Public status As String
+    'DATOS CONTACTO
+    Public EstuTutor As String
     Public telefono As String
     Public celular As String
     Public calle As String
@@ -40,17 +49,24 @@ Partial Class Admintrador_CrearPerfiles
     Public Docurecot As String
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        'DATOS DEL ALUMNO
         nombre = Nothing
-        apeP = Nothing
-        nombre = Nothing
-        apeP = Nothing
+        apellidop = Nothing
         apellidoM = Nothing
         email = Nothing
-        status = Nothing
+        EstadoCivil = Nothing
+        Sem = Nothing
+        ocup = Nothing
         gen = Nothing
+        BautH2o = Nothing
+        BautES = Nothing
+        AniosCongreg = Nothing
         instrumento = Nothing
         fechanac = Nothing
         edad = Nothing
+        status = Nothing
+        'DATOS CONTACTO
+        EstuTutor = Nothing
         telefono = Nothing
         celular = Nothing
         calle = Nothing
@@ -72,79 +88,106 @@ Partial Class Admintrador_CrearPerfiles
         municipioIgle = Nothing
         estadoIgle = Nothing
         Docurecot = Nothing
-
     End Sub
 
 
     Sub CargaDatosEstudiante()
-        nombre = Request.Form("nombre")
-        apeP = Request.Form("apellidoP")
-        apellidoM = Request.Form("apellidoM")
-        email = Request.Form("email")
-        status = "activo"
-        gen = Request.Form("genero") 'M = masculino - F = femenino
-        instrumento = Request.Form("instrum")
+        'DATOS ESTUDIANTE
+        nombre = Request.Form("nombre").ToUpper
+        apellidop = Request.Form("apellidoP").ToUpper
+        apellidoM = Request.Form("apellidoM").ToUpper
+        gen = Request.Form("genero").ToUpper 'M = masculino - F = femenino
+        ocup = Request.Form("ocupacion").ToUpper
+        BautH2o = Request.Form("BautAgua").ToUpper
+        BautES = Request.Form("BautES").ToUpper
+        status = "ACTIVO"
         fechanac = Request.Form("dia") & "/" & Request.Form("mes") & "/" & Request.Form("anio")
         edad = Request.Form("edad")
+        instrumento = Request.Form("instrum").ToUpper
+        status = "ACTIVO"
+        instrumento = Request.Form("instrum").ToUpper
+        Sem = Request.Form("Semestre")
+        AniosCongreg = Request.Form("tiempocongregante")
+        'DATOS DE CONTACTO
+        email = Request.Form("email")
+        gen = Request.Form("genero").ToUpper
+        EstadoCivil = Request.Form("edoCivil").ToUpper
         telefono = Request.Form("telefono")
         celular = Request.Form("celular")
-        calle = Request.Form("calle")
+        calle = Request.Form("calle").ToUpper
+        colonia = Request.Form("colonia").ToUpper
+        municipio = Request.Form("municipio").ToUpper
+        CodPostal = Request.Form("CPostal")
         noExt = Request.Form("noExt")
         noInt = Request.Form("noInt")
-        CodPostal = Request.Form("CPostal")
-        colonia = Request.Form("colonia")
-        municipio = Request.Form("municipio")
-        estado = Request.Form("estado")
+        estado = Request.Form("estado").ToUpper
 
         'DATOS IGLESIA Y PASTOR
-        nomigle = Request.Form("nombreigle")
-        nompas = Request.Form("nompas")
-        movimiento = Request.Form("movi")
+        nomigle = Request.Form("nombreigle").ToUpper
+        nompas = Request.Form("nompas").ToUpper
+        movimiento = Request.Form("movi").ToUpper
         telpastor = Request.Form("TelPastor")
         telIgle = Request.Form("telIgle")
         calleIgle = Request.Form("calleIgle") & "|" & Request.Form("noExtIgle") & "|" & Request.Form("noIntIgle")
         CodPostalI = Request.Form("CPostalI")
-        colonia2Igle = Request.Form("coloniaIgle")
-        municipioIgle = Request.Form("municipioIgle")
-        estadoIgle = Request.Form("estadoIgle")
+        colonia2Igle = Request.Form("coloniaIgle").ToUpper
+        municipioIgle = Request.Form("municipioIgle").ToUpper
+        estadoIgle = Request.Form("estadoIgle").ToUpper
         Docurecot = Request.Form("DocumentoRecot")
         'VALIDACION CP AMBOS
-        If edad <= 18 Then
-            edad = Request.Form("edad") & "|" & "MENOR EDAD"
+        If edad > 18 Then
+            edad = Request.Form("edad") & "| " & "TUTOR"
+        Else
+            edad = Request.Form("edad") & "| " & "EMERGENCIA"
         End If
         'Conexion a la base de datos de IMMAMP haciendo un insert a la tabla de estudiantes
         Dim sql As String
         Using connection As New SqlConnection(CONEXION)
-            sql = "Insert Into ALUMNO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,GENERO,ESTATUS,FECHA_NACIMIENTO,EDAD,FIJO,CELULAR,CALLE,COLONIA,MUNICIPIO,CP,INSTRUMENTO) values (@Nombre,@Apellido_Paterno,@Apellido_Materno,@Genero,@STATUS,@Fecha_Nacimiento,@Edad,@Fijo,@Celular,@Calle,@Colonia,@Municipio,@CP,@Intrumento)"
+            sql = "INSERT INTO ALUMNO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,GENERO,OCUPACION,BAUTISMOAH2o,BAUTISMOES,ANIOSCONGREG,ESTATUS,FECHA_NACIMIENTO,EDAD," &
+                       "INSTRUMENTO,SEMESTRE)" &
+                       "VALUES(@Nombre,@Apellido_Paterno,@Apellido_Materno,@Genero,@Ocupacion," &
+                       "@BautismH2O,@BautismoES,@AniosCongreg,@Estatus,@Fecha_Nacimiento,@Edad,@Intrumento,@Semestre)"
             Dim command As New SqlCommand(sql, connection)
             command.Parameters.Add("@Nombre", SqlDbType.VarChar)
             command.Parameters("@Nombre").Value = nombre
             command.Parameters.Add("@Apellido_Paterno", SqlDbType.VarChar)
-            command.Parameters("@Apellido_Paterno").Value = apeP
+            command.Parameters("@Apellido_Paterno").Value = apellidop
             command.Parameters.Add("@Apellido_Materno", SqlDbType.VarChar)
             command.Parameters("@Apellido_Materno").Value = apellidoM
             command.Parameters.Add("@Genero", SqlDbType.VarChar)
             command.Parameters("@Genero").Value = gen
-            command.Parameters.Add("@Status", SqlDbType.VarChar)
-            command.Parameters("@Status").Value = status
+            command.Parameters.Add("@Ocupacion", SqlDbType.VarChar)
+            command.Parameters("@Ocupacion").Value = ocup
+            command.Parameters.Add("@BautismH2O", SqlDbType.VarChar)
+            command.Parameters("@BautismH2O").Value = BautH2o
+            command.Parameters.Add("@BautismoES", SqlDbType.VarChar)
+            command.Parameters("@BautismoES").Value = BautES
+            command.Parameters.Add("@AniosCongreg", SqlDbType.VarChar)
+            command.Parameters("@AniosCongreg").Value = AniosCongreg
+            command.Parameters.Add("@EStatus", SqlDbType.VarChar)
+            command.Parameters("@EStatus").Value = status
             command.Parameters.Add("@Fecha_Nacimiento", SqlDbType.Date)
             command.Parameters("@Fecha_Nacimiento").Value = fechanac
             command.Parameters.Add("@Edad", SqlDbType.VarChar)
             command.Parameters("@Edad").Value = edad
-            command.Parameters.Add("@Fijo", SqlDbType.VarChar)
-            command.Parameters("@Fijo").Value = telefono
-            command.Parameters.Add("@Celular", SqlDbType.VarChar)
-            command.Parameters("@Celular").Value = celular
-            command.Parameters.Add("@Calle", SqlDbType.VarChar)
-            command.Parameters("@Calle").Value = calle
-            command.Parameters.Add("@Colonia", SqlDbType.VarChar)
-            command.Parameters("@Colonia").Value = colonia
-            command.Parameters.Add("@Municipio", SqlDbType.VarChar)
-            command.Parameters("@Municipio").Value = municipio
-            command.Parameters.Add("@Cp", SqlDbType.VarChar)
-            command.Parameters("@Cp").Value = CodPostal
             command.Parameters.Add("@Intrumento", SqlDbType.VarChar)
             command.Parameters("@Intrumento").Value = instrumento
+            command.Parameters.Add("@Semestre", SqlDbType.VarChar)
+            command.Parameters("@Semestre").Value = Sem
+            'command.Parameters.Add("@Fijo", SqlDbType.VarChar)
+            'command.Parameters("@Fijo").Value = telefono
+            'command.Parameters.Add("@Celular", SqlDbType.VarChar)
+            'command.Parameters("@Celular").Value = celular
+            'command.Parameters.Add("@Calle", SqlDbType.VarChar)
+            'command.Parameters("@Calle").Value = calle
+            'command.Parameters.Add("@Colonia", SqlDbType.VarChar)
+            'command.Parameters("@Colonia").Value = colonia
+            'command.Parameters.Add("@Municipio", SqlDbType.VarChar)
+            'command.Parameters("@Municipio").Value = municipio
+            'command.Parameters.Add("@Cp", SqlDbType.VarChar)
+            'command.Parameters("@Cp").Value = CodPostal
+            'command.Parameters.Add("@Intrumento", SqlDbType.VarChar)
+            'command.Parameters("@Intrumento").Value = instrumento
             Try
                 connection.Open()
                 command.ExecuteNonQuery()
@@ -336,6 +379,7 @@ Partial Class Admintrador_CrearPerfiles
         End Using
         Return OptionCol
     End Function
+
 End Class
 'Carga Datos Iglesia
 
