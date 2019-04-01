@@ -7,10 +7,11 @@
     <link href="Resources/Styles/css/Index.css" rel="stylesheet" />
     <link href="Resources/Styles/HeaderIndex.css" rel="stylesheet" />
     <link rel="shotcut icon" href="../Resources/images/immamp.png" />
-    <link href="../Resources/Styles/HeaderIndex.css" rel="stylesheet" />
+    <link href="../Resources/Styles/HeaderIndex.css" rel="stylesheet" />e
     <link href="../Resources/Styles/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../Resources/scripts/jquery-2.1.1.min.js" async="async"></script>
     <script src="../Resources/scripts/General/jquery-ui-1.10.2.custom.js" async="async"></script>
+    <meta name="IMMAMP" content="IMMAMP,immamp, instituto de musica aquiles mireles perales, aquiles mireles perales, instituto de musica portales, instituto de musica plantel central"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -25,7 +26,7 @@
         <img src="Resources/images/IMMAMP1.jpg" style="padding-top: 60px; border-radius: 20px" class="rounded" alt="Cinque Terre" />
     </div>
     <div class="col-md-12 col-xs-12 form-group" style="margin-top: 64px;">
-        <div class="container" style="background-color: #a1e8ea94;">
+        <div class="container" style="background-color: #a1e8ea94; border-radius: 6px;">
             <div class="row">
                 <div class="col-md-4" style="text-align: center;">
                     <h3>NOSOTROS</h3>
@@ -44,35 +45,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <h1 style="color: #feffff; text-align: center; padding: 30px">VALORES</h1>
-            <div class="row">
-                <div class="col-md-4" style="text-align: center;">
-                    <h3 style="color: #feffff;">MISÓN</h3>
-                    <p style="color: #feffff;">OFRECER A SUS EGRESADOS UNA FORMACIÓN INTEGRAL EN EL TERRENO DEL MINISTERIO MUSICAL.</p>
-                </div>
-                <div class="col-md-4" style="text-align: center;">
-                    <h3 style="color: #feffff;">VISIÓN</h3>
-                    <p style="color: #feffff;">HACER DE LA ICIAR UNA IGLESIA QUE GLORIFIQUE A DIOS EN ESPÍRITU Y EN VERDAD</p>
-                </div>
-                <div class="col-md-4" style="text-align: center;">
-                    <h3 style="color: #feffff;">OBJETIVOS</h3>
-                    <p style="color: #feffff;">
-                        1.- FORMAR MINISTROS DE MÚSICA “CONFORME AL CORAZÓN DE DIOS”.
-                        </p>
-                    <p style="color: #feffff;">
-                        2.- CONSERVACIÓN, DIFUSIÓN E INVESTIGACIÓN DE LA MÚSICA CRISTIANA.
-                        </p>
-                    <p style="color: #feffff;">
-                        3.- ELEVAR CONSTANTEMENTE EL NIVEL ESPIRITUAL Y TÉCNICO DE LA MÚSICA CULTUAL.
-                        </p>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="container mt-3 container mt-3 col-md-8">
+        <div class="col-md-8 offset-2">
             <h2 style="color: #feffff; text-align: center;">IMMAMP</h2>
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 850px;">
                 <!-- INDICADORES -->
                 <ul class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -127,6 +102,73 @@
                     <span class="carousel-control-next-icon"></span>
                 </a>
             </div>
+        </div>
+        <div class="col-md-12">
+            <h1 style="color: #f8f9fa; text-align: center; padding: 30px">VALORES</h1>
+            <div class="row" style="background-color: #a1e8ea94; border-radius: 6px;">
+                <div class="col-md-4" style="text-align: center;">
+                    <h3 style="color: #000000; font-size: 42px;">MISÓN</h3>
+                    <p style="color: #000000;"><b>OFRECER A SUS EGRESADOS UNA FORMACIÓN INTEGRAL EN EL TERRENO DEL MINISTERIO MUSICAL.</b></p>
+                </div>
+                <div class="col-md-4" style="text-align: center;">
+                    <h3 style="color: #000000; font-size: 42px;">VISIÓN</h3>
+                    <p style="color: #000000;"><b>HACER DE LA ICIAR UNA IGLESIA QUE GLORIFIQUE A DIOS EN ESPÍRITU Y EN VERDAD</b></p>
+                </div>
+                <div class="col-md-4" style="text-align: center;">
+                    <h3 style="color: #000000; font-size: 42px;">OBJETIVOS</h3>
+                    <p style="color: #000000;">
+                        <b>1.- FORMAR MINISTROS DE MÚSICA “CONFORME AL CORAZÓN DE DIOS”.</b>
+                    </p>
+                    <p style="color: #000000;">
+                        <b>2.- CONSERVACIÓN, DIFUSIÓN E INVESTIGACIÓN DE LA MÚSICA CRISTIANA.</b>
+                    </p>
+                    <p style="color: #000000;">
+                        <b>3.- ELEVAR CONSTANTEMENTE EL NIVEL ESPIRITUAL Y TÉCNICO DE LA MÚSICA CULTUAL.</b>
+                    </p>
+
+                </div>
+            </div>
+           <div class="col-md-12">
+            <h1 style="color: #feffff; text-align: center; padding: 30px">CONTACTO</h1>
+                 <div class="col-md-6 offset-3" style="background-color: #a1e8ea94; border-radius: 16px;">
+             <form action="mailto: slytherinnan@gmail.com" method="post">
+            Nombre:  <br>
+            <input type="text" name="nombre">
+            <br>
+            <br>Apellidos: <br>
+            <input type="text" name="apellidos"> <br>
+            <p>
+            <select name="prioridad">
+            <option> urgente
+            <option> poco urgente
+            <option> sin urgencia
+            </select>
+
+            <br>
+            <p>
+            <textarea name="comentarios" rows="6" cols="20">
+            </textarea>
+            <br> Forma de constestacion
+            <p>
+            <input type="radio" name="constestacion" value="e-mail"> e-mail
+            <input type="radio" name="contestacion" value="telefono" >telefono
+            <input type="radio" name="constestacion" value="whatsapp"">whatsapp
+            <br>
+            <p>
+            <input type="submit" value="Enviar Datos">
+            <input type="reset" value="Borrar Datos">
+            <br>
+            &nbsp;
+            <br>
+
+             <input type="password" name="pass"><br>
+             <input type="checkbox" name="opciones" value="correo"> correo <br>
+             <input type="checkbox" name="opciones" value="telefono"> telefono <br>
+             <input type="checkbox" name="opciones" value="whatsapp"> whatsapp <br>
+             &nbsp;
+
+            </form>
+                </div>    </div>
         </div>
     </div>
     <!-- #include file ="/Globales/footer.aspx" -->
