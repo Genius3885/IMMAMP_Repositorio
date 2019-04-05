@@ -83,10 +83,7 @@ ul#menu-horizontal li:hover ul {
 img.derecha {
     float: right;
 }
-.imgFondo {
-    background-image: url('../images/Fondo.jpg');
-   
-}
+
 .body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;

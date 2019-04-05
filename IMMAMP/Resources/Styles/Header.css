@@ -1,25 +1,16 @@
 ﻿
 .header {
-    background: #fbfdff;
-    width: 100%;
-    height: 156px;
-    z-index: 100;
-    position: fixed;
-    border-bottom: 1px solid #dee2e6;
+    background-image: url('../../images/point.png');
+    background-position: center center;
+    background-repeat: repeat;
+    background-size: 8px;
 }
-.imgmusica {
-    background-image: url('../images/kdkdk.png');
-    background-repeat: no-repeat;
-    height: 135px;
-    z-index: 100;
-}
-
-.footer {
+/*.footer {
     background-image: url('../images/footer1.png');
     margin: 1px 0px 0px -10px;
     background-repeat: no-repeat;
     height: 154px;
-}
+}*/
 .btnlog {
     width: 121px;
     height: 38px;
@@ -30,7 +21,7 @@
     margin-right: 83px;
 }
 .headerLogo {
-    background-image: url('../images/immamplogo1.jpg');
+    background-image: url('../images/immamp.PNG');
     margin: 7px 0px 0px 100px;
     background-repeat: no-repeat;
     height: 98px;

@@ -19,6 +19,7 @@ Partial Class Admintrador_CrearPerfiles
     Public gen As String
     Public BautH2o As String
     Public BautES As String
+    Public tcont As String
     Public AniosCongreg As String
     Public instrumento As String
     Public fechanac As String
@@ -60,6 +61,7 @@ Partial Class Admintrador_CrearPerfiles
         gen = Nothing
         BautH2o = Nothing
         BautES = Nothing
+        tcont = Nothing
         AniosCongreg = Nothing
         instrumento = Nothing
         fechanac = Nothing
@@ -100,6 +102,7 @@ Partial Class Admintrador_CrearPerfiles
         ocup = Request.Form("ocupacion").ToUpper
         BautH2o = Request.Form("BautAgua").ToUpper
         BautES = Request.Form("BautES").ToUpper
+        tcont = Request.Form("tipocont").ToUpper
         status = "ACTIVO"
         fechanac = Request.Form("dia") & "/" & Request.Form("mes") & "/" & Request.Form("anio")
         edad = Request.Form("edad")
@@ -135,10 +138,10 @@ Partial Class Admintrador_CrearPerfiles
         estadoIgle = Request.Form("estadoIgle").ToUpper
         Docurecot = Request.Form("DocumentoRecot")
         'VALIDACION CP AMBOS
-        If edad > 18 Then
-            edad = Request.Form("edad") & "| " & "TUTOR"
+        If edad >= 18 Then
+            edad = Request.Form("edad")
         Else
-            edad = Request.Form("edad") & "| " & "EMERGENCIA"
+            edad = Request.Form("edad")
         End If
         'Conexion a la base de datos de IMMAMP haciendo un insert a la tabla de estudiantes
         Dim sql As String
@@ -195,64 +198,108 @@ Partial Class Admintrador_CrearPerfiles
             Catch ex As Exception
                 errorr = ex.Message
             End Try
-
+            Using connection1 As New SqlConnection(CONEXION)
+                sql = "INSERT INTO CONTACTO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,CORREO,GENERO,EDOCIVIL,OCUPACION,TIPOCONTACTO,FECHA_NACIMIENTO,EDAD,FIJO,CELULAR,CALLE,COLONIA,MUNICIPIO,CP)" &
+                    "VALUES(@Nombre, @Apellido_Paterno, @Apellido_Materno, @Correo, @Genero ,@EdoCivil, @Ocupacion,@TipoContacto,@Fecha_Nacimiento" &
+                       "@Edad,@Fijo,@Celular,@Calle,@Colonia,@Municipio,@Cp)"
+                Dim command1 As New SqlCommand(sql, connection1)
+                command1.Parameters.Add("@Nombre", SqlDbType.VarChar)
+                command1.Parameters("@Nombre").Value = nombre
+                command1.Parameters.Add("@Apellido_Paterno", SqlDbType.VarChar)
+                command1.Parameters("@Apellido_Paterno").Value = apellidop
+                command1.Parameters.Add("@Apellido_Materno", SqlDbType.VarChar)
+                command1.Parameters("@Apellido_Materno").Value = apellidoM
+                command1.Parameters.Add("@Correo", SqlDbType.VarChar)
+                command1.Parameters("@Correo").Value = email
+                command1.Parameters.Add("@Genero", SqlDbType.VarChar)
+                command1.Parameters("@Genero").Value = gen
+                command1.Parameters.Add("@EdoCivil", SqlDbType.VarChar)
+                command1.Parameters("@EdoCivil").Value = EstadoCivil
+                command1.Parameters.Add("@Ocupacion", SqlDbType.VarChar)
+                command1.Parameters("@Ocupacion").Value = ocup
+                command1.Parameters.Add("@TipoContacto", SqlDbType.VarChar)
+                command1.Parameters("@TipoContacto").Value = tcont
+                command1.Parameters.Add("@Fecha_Nacimiento", SqlDbType.Date)
+                command1.Parameters("@Fecha_Nacimiento").Value = fechanac
+                command1.Parameters.Add("@Edad", SqlDbType.VarChar)
+                command1.Parameters("@Edad").Value = edad
+                command1.Parameters.Add("@Fijo", SqlDbType.VarChar)
+                command1.Parameters("@Fijo").Value = telefono
+                command1.Parameters.Add("@Celular", SqlDbType.VarChar)
+                command1.Parameters("@Celular").Value = celular
+                command1.Parameters.Add("@Calle", SqlDbType.VarChar)
+                command1.Parameters("@Calle").Value = calle
+                command1.Parameters.Add("@Colonia", SqlDbType.VarChar)
+                command1.Parameters("@Colonia").Value = colonia
+                command1.Parameters.Add("@Municipio", SqlDbType.VarChar)
+                command1.Parameters("@Municipio").Value = municipio
+                command1.Parameters.Add("@Cp", SqlDbType.VarChar)
+                command1.Parameters("@Cp").Value = CodPostal
+                Try
+                    connection.Open()
+                    command.ExecuteNonQuery()
+                    connection.Close()
+                Catch ex As Exception
+                    GeneradorLogsIMMAMP.xmlIMMAMPLog("Error al INSERTAR Contacto: " + ex.Message + "||" + "Detalle: " + ex.StackTrace, "")
+                End Try
+            End Using
             'INSERT DATOS IGLESIA
             Using connection2 As New SqlConnection(CONEXION)
-                sql = "INSERT INTO IGLESIA (NOMBRE,MOVIMIENTO,FIJO,CELULAR,CALLE,COLONIA,MUNICIPIO,CP,ESTADO) VALUES (@Nombre,@Movimiento,@Fijo,@Celular,@Calle,@Colonia,@Municipio,@Cp,@Estado)"
-                Dim command2 As New SqlCommand(sql, connection2)
-                command2.Parameters.Add("@Nombre", SqlDbType.VarChar)
-                command2.Parameters("@Nombre").Value = nomigle
-                command2.Parameters.Add("@Movimiento", SqlDbType.VarChar)
-                command2.Parameters("@Movimiento").Value = movimiento
-                command2.Parameters.Add("@Fijo", SqlDbType.VarChar)
-                command2.Parameters("@Fijo").Value = telIgle
-                command2.Parameters.Add("@Celular", SqlDbType.VarChar)
-                command2.Parameters("@Celular").Value = telpastor
-                command2.Parameters.Add("@Calle", SqlDbType.VarChar)
-                command2.Parameters("@Calle").Value = calleIgle
-                command2.Parameters.Add("@Colonia", SqlDbType.VarChar)
-                command2.Parameters("@Colonia").Value = colonia2Igle
-                command2.Parameters.Add("@Municipio", SqlDbType.VarChar)
-                command2.Parameters("@Municipio").Value = municipioIgle
-                command2.Parameters.Add("@Cp", SqlDbType.VarChar)
-                command2.Parameters("@Cp").Value = CodPostalI
-                command2.Parameters.Add("@Estado", SqlDbType.VarChar)
-                command2.Parameters("@Estado").Value = estadoIgle
-                Try
-                    connection2.Open()
-                    command2.ExecuteNonQuery()
-                    connection.Close()
-                Catch ex As Exception
-                    errorr = ex.Message
-                End Try
-            End Using
-            'DATOS PASTOR
-            Using connection3 As New SqlConnection(CONEXION)
-                sql = "INSERT INTO PASTOR (NOMBRE,FIJO,CELULAR) VALUES (@Nombre,@Fijo,@Celular)"
-                Dim command3 As New SqlCommand(sql, connection3)
-                command3.Parameters.Add("@Nombre", SqlDbType.VarChar)
-                command3.Parameters("@Nombre").Value = nompas
-                command3.Parameters.Add("@Fijo", SqlDbType.Int)
-                command3.Parameters("@Fijo").Value = telIgle
-                command3.Parameters.Add("@Celular", SqlDbType.Int)
-                command3.Parameters("@Celular").Value = telpastor
-                If telIgle = Nothing Then
-                    telIgle = "'SIN NUMERO'"
-                End If
-                If telpastor = Nothing Then
-                    telpastor = "'SIN NUMERO'"
-                End If
+                    sql = "INSERT INTO IGLESIA (NOMBRE,MOVIMIENTO,FIJO,CELULAR,CALLE,COLONIA,MUNICIPIO,CP,ESTADO) VALUES (@Nombre,@Movimiento,@Fijo,@Celular,@Calle,@Colonia,@Municipio,@Cp,@Estado)"
+                    Dim command2 As New SqlCommand(sql, connection2)
+                    command2.Parameters.Add("@Nombre", SqlDbType.VarChar)
+                    command2.Parameters("@Nombre").Value = nomigle
+                    command2.Parameters.Add("@Movimiento", SqlDbType.VarChar)
+                    command2.Parameters("@Movimiento").Value = movimiento
+                    command2.Parameters.Add("@Fijo", SqlDbType.VarChar)
+                    command2.Parameters("@Fijo").Value = telIgle
+                    command2.Parameters.Add("@Celular", SqlDbType.VarChar)
+                    command2.Parameters("@Celular").Value = telpastor
+                    command2.Parameters.Add("@Calle", SqlDbType.VarChar)
+                    command2.Parameters("@Calle").Value = calleIgle
+                    command2.Parameters.Add("@Colonia", SqlDbType.VarChar)
+                    command2.Parameters("@Colonia").Value = colonia2Igle
+                    command2.Parameters.Add("@Municipio", SqlDbType.VarChar)
+                    command2.Parameters("@Municipio").Value = municipioIgle
+                    command2.Parameters.Add("@Cp", SqlDbType.VarChar)
+                    command2.Parameters("@Cp").Value = CodPostalI
+                    command2.Parameters.Add("@Estado", SqlDbType.VarChar)
+                    command2.Parameters("@Estado").Value = estadoIgle
+                    Try
+                        connection2.Open()
+                        command2.ExecuteNonQuery()
+                        connection.Close()
+                    Catch ex As Exception
+                        errorr = ex.Message
+                    End Try
+                End Using
+                'DATOS PASTOR
+                Using connection3 As New SqlConnection(CONEXION)
+                    sql = "INSERT INTO PASTOR (NOMBRE,FIJO,CELULAR) VALUES (@Nombre,@Fijo,@Celular)"
+                    Dim command3 As New SqlCommand(sql, connection3)
+                    command3.Parameters.Add("@Nombre", SqlDbType.VarChar)
+                    command3.Parameters("@Nombre").Value = nompas
+                    command3.Parameters.Add("@Fijo", SqlDbType.Int)
+                    command3.Parameters("@Fijo").Value = telIgle
+                    command3.Parameters.Add("@Celular", SqlDbType.Int)
+                    command3.Parameters("@Celular").Value = telpastor
+                    If telIgle = Nothing Then
+                        telIgle = "'SIN NUMERO'"
+                    End If
+                    If telpastor = Nothing Then
+                        telpastor = "'SIN NUMERO'"
+                    End If
 
-                Try
-                    connection3.Open()
-                    command3.ExecuteNonQuery()
-                    connection.Close()
-                Catch ex As Exception
-                    errorr = ex.Message
-                End Try
+                    Try
+                        connection3.Open()
+                        command3.ExecuteNonQuery()
+                        connection.Close()
+                    Catch ex As Exception
+                        errorr = ex.Message
+                    End Try
+                End Using
             End Using
-        End Using
-        Response.Redirect("../Administrador/AlumnosCreado.aspx")
+            Response.Redirect("../Administrador/AlumnosCreado.aspx")
     End Sub
     'LLENADO DE DATOS DEL CONTACTO Colonias
     <WebMethod>
