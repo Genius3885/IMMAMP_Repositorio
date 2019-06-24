@@ -1,8 +1,7 @@
 ﻿Imports System.Data
 Imports System.Data.SqlClient
 Imports System.Web.Services
-
-
+Imports System.Threading
 Partial Class Admintrador_CrearPerfiles
     Inherits System.Web.UI.Page
     Public errorr As String = ""
@@ -43,11 +42,24 @@ Partial Class Admintrador_CrearPerfiles
     Public telpastor As String
     Public telIgle As String
     Public calleIgle As String
+    Public noExtIgle As String
+    Public noIntIgle As String
     Public CodPostalI As String
     Public colonia2Igle As String
     Public municipioIgle As String
     Public estadoIgle As String
     Public Docurecot As String
+    'FECHA CREACION
+    Public FCreacion As DateFormat
+    Public HoraCeacion As DateFormat
+    Public IDIglesia As String
+    Public IDPastor1 As String
+    Public IDaLUMNO As String
+    Public direecionIglesia As String
+    Public direccionContacto As String
+    Public nombreTutor0 As String
+    Public apellidoPTutor0 As String
+    Public apellidoMTutor0 As String
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'DATOS DEL ALUMNO
@@ -90,6 +102,20 @@ Partial Class Admintrador_CrearPerfiles
         municipioIgle = Nothing
         estadoIgle = Nothing
         Docurecot = Nothing
+        'FECHA CREACION
+        FCreacion = DateTime.Now.ToString("yyyyMMdd")
+        'HoraCeacion = DateTime.Now.ToString("HHmms")
+        'FCreacion = FCreacion & HoraCeacion
+        HoraCeacion = Nothing
+        IDIglesia = Nothing
+        IDPastor1 = Nothing
+        IDaLUMNO = Nothing
+        direecionIglesia = Nothing
+        direccionContacto = Nothing
+        nombreTutor0 = Nothing
+        apellidoPTutor0 = Nothing
+        apellidoMTutor0 = Nothing
+
     End Sub
 
 
@@ -102,12 +128,11 @@ Partial Class Admintrador_CrearPerfiles
         ocup = Request.Form("ocupacion").ToUpper
         BautH2o = Request.Form("BautAgua").ToUpper
         BautES = Request.Form("BautES").ToUpper
-        tcont = Request.Form("tipocont").ToUpper
-        status = "ACTIVO"
+        'tcont = Request.Form("tipocont").ToUpper
+        status = "1"
         fechanac = Request.Form("dia") & "/" & Request.Form("mes") & "/" & Request.Form("anio")
         edad = Request.Form("edad")
         instrumento = Request.Form("instrum").ToUpper
-        status = "ACTIVO"
         instrumento = Request.Form("instrum").ToUpper
         Sem = Request.Form("Semestre")
         AniosCongreg = Request.Form("tiempocongregante")
@@ -124,6 +149,9 @@ Partial Class Admintrador_CrearPerfiles
         noExt = Request.Form("noExt")
         noInt = Request.Form("noInt")
         estado = Request.Form("estado").ToUpper
+        nombreTutor0 = Request.Form("nombreTutor").ToUpper
+        apellidoPTutor0 = Request.Form("apellidoPTutor").ToUpper
+        apellidoMTutor0 = Request.Form("apellidoMTutor").ToUpper
 
         'DATOS IGLESIA Y PASTOR
         nomigle = Request.Form("nombreigle").ToUpper
@@ -131,26 +159,276 @@ Partial Class Admintrador_CrearPerfiles
         movimiento = Request.Form("movi").ToUpper
         telpastor = Request.Form("TelPastor")
         telIgle = Request.Form("telIgle")
-        calleIgle = Request.Form("calleIgle") & "|" & Request.Form("noExtIgle") & "|" & Request.Form("noIntIgle")
+        calleIgle = Request.Form("calleIgle").ToUpper
+        noExtIgle = Request.Form("noExtIgle")
+        noIntIgle = Request.Form("noIntIgle")
         CodPostalI = Request.Form("CPostalI")
         colonia2Igle = Request.Form("coloniaIgle").ToUpper
         municipioIgle = Request.Form("municipioIgle").ToUpper
         estadoIgle = Request.Form("estadoIgle").ToUpper
         Docurecot = Request.Form("DocumentoRecot")
-        'VALIDACION CP AMBOS
-        If edad >= 18 Then
-            edad = Request.Form("edad")
-        Else
-            edad = Request.Form("edad")
+        'direecionIglesia = calleIgle & noExtIgle & noIntIgle
+        
+        'VLIDACION No INTERIOR
+        If noInt = Nothing Then
+            noInt = "0"
         End If
-        'Conexion a la base de datos de IMMAMP haciendo un insert a la tabla de estudiantes
-        Dim sql As String
+        'VALIDACION FECHA h2o
+        If BautH2o = Nothing Or BautH2o = "" Then
+            BautH2o = "SIN INFORMACION"
+        End If
+        If BautES = Nothing Or BautES = "" Then
+            BautES = "SIN INFORMACION"
+        End If
+        '"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"'
+        ObtenerIDEstudiante()
+
+
+    End Sub
+    Sub ObtenerIDEstudiante()
+        'OBTENER ID ALUMNO
+        Dim NomCompleto = nombre + apellidop + apellidoM
+        Dim commandText2 As String = "SELECT  ID_ALUMNO FROM ALUMNO WHERE  NOMBRE + APELLIDO_PATERNO + APELLIDO_MATERNO ='" & NomCompleto & "' "
+        Using connectioncommandIDaLUMNO As New SqlConnection(CONEXION)
+            Dim commandIDAlumno As New SqlCommand(commandText2, connectioncommandIDaLUMNO)
+            commandIDAlumno.Parameters.Add("@Nombre", SqlDbType.VarChar)
+            commandIDAlumno.Parameters("@Nombre").Value = NomCompleto
+            Try
+                Dim reader As SqlDataReader
+                connectioncommandIDaLUMNO.Open()
+                reader = commandIDAlumno.ExecuteReader(CommandBehavior.CloseConnection)
+                While (reader.Read())
+                    IDaLUMNO = reader("ID_ALUMNO")
+                End While
+                If IDaLUMNO = Nothing Or IDaLUMNO = "" Then
+                    CrearAlumno()
+                End If
+                InsertaContacto(IDaLUMNO)
+                connectioncommandIDaLUMNO.Close()
+            Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al Seleccionar Pastor: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
+            End Try
+        End Using
+
+    End Sub
+    Sub ObtenerIDEstudianteTUTOR()
+        'OBTENER ID ALUMNO
+        Dim NomCompleto = nombre + apellidop + apellidoM
+        Dim commandText2 As String = "SELECT  ID_ALUMNO FROM ALUMNO WHERE  NOMBRE + APELLIDO_PATERNO + APELLIDO_MATERNO ='" & NomCompleto & "' "
+        Using connectioncommandIDaLUMNO As New SqlConnection(CONEXION)
+            Dim commandIDAlumno As New SqlCommand(commandText2, connectioncommandIDaLUMNO)
+            commandIDAlumno.Parameters.Add("@Nombre", SqlDbType.VarChar)
+            commandIDAlumno.Parameters("@Nombre").Value = NomCompleto
+            Try
+                Dim reader As SqlDataReader
+                connectioncommandIDaLUMNO.Open()
+                reader = commandIDAlumno.ExecuteReader(CommandBehavior.CloseConnection)
+                While (reader.Read())
+                    IDaLUMNO = reader("ID_ALUMNO")
+                End While
+                If IDaLUMNO = Nothing Or IDaLUMNO = "" Then
+                    CrearAlumno()
+                End If
+                InsertaContactoTutor(IDaLUMNO)
+                connectioncommandIDaLUMNO.Close()
+            Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al Seleccionar Pastor: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
+            End Try
+        End Using
+
+    End Sub
+    Sub InsertaContacto(IDaLUMNO)
+        'CONDICION PARA SABER SI ES ESTUDIANTE Y TUTOR
+        If edad > 18 Then
+            tcont = "ESTUDIANTE"
+        Else
+            tcont = "TUTOR"
+            InsertaContactoTutor(IDaLUMNO)
+        End If
+        'INSERTA CONTACTO ESTUDIANTE
+        Dim sql2 As String
+        Using connection1 As New SqlConnection(CONEXION)
+            sql2 = "INSERT INTO CONTACTO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,CORREO,GENERO,EDOCIVIL,OCUPACION," &
+                       "TIPOCONTACTO,FECHA_NACIMIENTO,EDAD,FIJO,CELULAR,DIRECCION,NoExt,NoInt,COLONIA,MUNICIPIO,CP,ID_ALUMNO,FECHACREACION)" &
+                    "VALUES(@Nombre, @Apellido_Paterno, @Apellido_Materno, @Correo, @Genero ,@EdoCivil, @Ocupacion,@TipoContacto," &
+                       "@FechaNacimiento,@Edad,@Fijo,@Celular,@DIRECCION_CONT,@No_Ext,@No_Int,@Colonia,@Municipio,@Cp,@IdAlumno,@FECHA_CREACION)"
+            Dim command1 As New SqlCommand(sql2, connection1)
+            command1.Parameters.Add("@Nombre", SqlDbType.VarChar)
+            command1.Parameters("@Nombre").Value = nombre
+            command1.Parameters.Add("@Apellido_Paterno", SqlDbType.VarChar)
+            command1.Parameters("@Apellido_Paterno").Value = apellidop
+            command1.Parameters.Add("@Apellido_Materno", SqlDbType.VarChar)
+            command1.Parameters("@Apellido_Materno").Value = apellidoM
+            command1.Parameters.Add("@Correo", SqlDbType.VarChar)
+            command1.Parameters("@Correo").Value = email
+            command1.Parameters.Add("@Genero", SqlDbType.VarChar)
+            command1.Parameters("@Genero").Value = gen
+            command1.Parameters.Add("@EdoCivil", SqlDbType.VarChar)
+            command1.Parameters("@EdoCivil").Value = EstadoCivil
+            command1.Parameters.Add("@Ocupacion", SqlDbType.VarChar)
+            command1.Parameters("@Ocupacion").Value = ocup
+            command1.Parameters.Add("@TipoContacto", SqlDbType.VarChar)
+            command1.Parameters("@TipoContacto").Value = tcont
+            command1.Parameters.Add("@FechaNacimiento", SqlDbType.VarChar)
+            command1.Parameters("@FechaNacimiento").Value = fechanac
+            command1.Parameters.Add("@Edad", SqlDbType.VarChar)
+            command1.Parameters("@Edad").Value = edad
+            command1.Parameters.Add("@Fijo", SqlDbType.VarChar)
+            command1.Parameters("@Fijo").Value = telefono
+            command1.Parameters.Add("@Celular", SqlDbType.VarChar)
+            command1.Parameters("@Celular").Value = celular
+            command1.Parameters.Add("@DIRECCION_CONT", SqlDbType.VarChar)
+            command1.Parameters("@DIRECCION_CONT").Value = calle
+            command1.Parameters.Add("@No_Ext", SqlDbType.VarChar)
+            command1.Parameters("@No_Ext").Value = noExt
+            command1.Parameters.Add("@No_Int", SqlDbType.VarChar)
+            command1.Parameters("@No_Int").Value = noInt
+            command1.Parameters.Add("@Colonia", SqlDbType.VarChar)
+            command1.Parameters("@Colonia").Value = colonia
+            command1.Parameters.Add("@Municipio", SqlDbType.VarChar)
+            command1.Parameters("@Municipio").Value = municipio
+            command1.Parameters.Add("@Cp", SqlDbType.VarChar)
+            command1.Parameters("@Cp").Value = CodPostal
+            command1.Parameters.Add("@IdAlumno", SqlDbType.VarChar)
+            command1.Parameters("@IdAlumno").Value = IDaLUMNO
+            command1.Parameters.Add("@FECHA_CREACION", SqlDbType.VarChar)
+            command1.Parameters("@FECHA_CREACION").Value = FCreacion
+            If IDaLUMNO = Nothing Then
+                ObtenerIDEstudiante()
+            End If
+
+            Try
+                connection1.Open()
+                command1.ExecuteNonQuery()
+                connection1.Close()
+            Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al INSERTAR Contacto: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
+            End Try
+        End Using
+        Thread.Sleep(10000)
+        Response.Redirect("../Administrador/AlumnosCreado.aspx")
+    End Sub
+    Sub InsertaContactoTutor(IDaLUMNO)
+        'INSERTA CONTACTO ESTUDIANTE
+        Dim sql2 As String
+        Using connection1 As New SqlConnection(CONEXION)
+            sql2 = "INSERT INTO CONTACTO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,CORREO,GENERO,EDOCIVIL,OCUPACION," &
+                       "TIPOCONTACTO,FECHA_NACIMIENTO,EDAD,FIJO,CELULAR,DIRECCION,NoExt,NoInt,COLONIA,MUNICIPIO,CP,ID_ALUMNO,FECHACREACION)" &
+                    "VALUES(@Nombre, @Apellido_Paterno, @Apellido_Materno, @Correo, @Genero ,@EdoCivil, @Ocupacion,@TipoContacto," &
+                       "@FechaNacimiento,@Edad,@Fijo,@Celular,@DIRECCION_CONT,@No_Ext,@No_Int,@Colonia,@Municipio,@Cp,@IdAlumno,@FECHA_CREACION)"
+            Dim command1 As New SqlCommand(sql2, connection1)
+            command1.Parameters.Add("@Nombre", SqlDbType.VarChar)
+            command1.Parameters("@Nombre").Value = nombreTutor0
+            command1.Parameters.Add("@Apellido_Paterno", SqlDbType.VarChar)
+            command1.Parameters("@Apellido_Paterno").Value = apellidoPTutor0
+            command1.Parameters.Add("@Apellido_Materno", SqlDbType.VarChar)
+            command1.Parameters("@Apellido_Materno").Value = apellidoMTutor0
+            command1.Parameters.Add("@Correo", SqlDbType.VarChar)
+            command1.Parameters("@Correo").Value = email
+            command1.Parameters.Add("@Genero", SqlDbType.VarChar)
+            command1.Parameters("@Genero").Value = gen
+            command1.Parameters.Add("@EdoCivil", SqlDbType.VarChar)
+            command1.Parameters("@EdoCivil").Value = EstadoCivil
+            command1.Parameters.Add("@Ocupacion", SqlDbType.VarChar)
+            command1.Parameters("@Ocupacion").Value = ocup
+            command1.Parameters.Add("@TipoContacto", SqlDbType.VarChar)
+            command1.Parameters("@TipoContacto").Value = tcont
+            command1.Parameters.Add("@FechaNacimiento", SqlDbType.VarChar)
+            command1.Parameters("@FechaNacimiento").Value = fechanac
+            command1.Parameters.Add("@Edad", SqlDbType.VarChar)
+            command1.Parameters("@Edad").Value = edad
+            command1.Parameters.Add("@Fijo", SqlDbType.VarChar)
+            command1.Parameters("@Fijo").Value = telefono
+            command1.Parameters.Add("@Celular", SqlDbType.VarChar)
+            command1.Parameters("@Celular").Value = celular
+            command1.Parameters.Add("@DIRECCION_CONT", SqlDbType.VarChar)
+            command1.Parameters("@DIRECCION_CONT").Value = calle
+            command1.Parameters.Add("@No_Ext", SqlDbType.VarChar)
+            command1.Parameters("@No_Ext").Value = noExt
+            command1.Parameters.Add("@No_Int", SqlDbType.VarChar)
+            command1.Parameters("@No_Int").Value = noInt
+            command1.Parameters.Add("@Colonia", SqlDbType.VarChar)
+            command1.Parameters("@Colonia").Value = colonia
+            command1.Parameters.Add("@Municipio", SqlDbType.VarChar)
+            command1.Parameters("@Municipio").Value = municipio
+            command1.Parameters.Add("@Cp", SqlDbType.VarChar)
+            command1.Parameters("@Cp").Value = CodPostal
+            command1.Parameters.Add("@IdAlumno", SqlDbType.VarChar)
+            command1.Parameters("@IdAlumno").Value = IDaLUMNO
+            command1.Parameters.Add("@FECHA_CREACION", SqlDbType.VarChar)
+            command1.Parameters("@FECHA_CREACION").Value = FCreacion
+            If IDaLUMNO = Nothing Then
+                ObtenerIDEstudianteTUTOR()
+            End If
+            Try
+                connection1.Open()
+                command1.ExecuteNonQuery()
+                connection1.Close()
+            Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al INSERTAR Contacto: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
+            End Try
+        End Using
+        Thread.Sleep(10000)
+        Response.Redirect("../Administrador/AlumnosCreado.aspx")
+    End Sub
+
+    'Function ObtenerPastor(IDPastor1)
+    '    'OBTENER ID PASTOR
+    '    'Session("IDPastor") = IDPastor1
+    '    Dim commandTextT As String = "Select ID_Pastor From PASTOR Where Nombre_Pastor = '" & nompas & "' AND MOVIMIENTO = '" & movimiento & "' AND Nombre_Iglesia = '" & nomigle & "'"
+    '    Using connectionPast As New SqlConnection(CONEXION)
+    '        Dim commandIDPas As New SqlCommand(commandTextT, connectionPast)
+    '        commandIDPas.Parameters.Add("@Nombre", SqlDbType.VarChar)
+    '        commandIDPas.Parameters("@Nombre").Value = nompas
+    '        Try
+    '            Dim reader As SqlDataReader
+    '            connectionPast.Open()
+    '            reader = commandIDPas.ExecuteReader(CommandBehavior.CloseConnection)
+    '            While (reader.Read())
+    '                IDPastor1 = reader("ID_Pastor")
+    '            End While
+    '            If IDPastor1 = Nothing Then
+    '                CrearPastor(nompas, telIgle, telpastor, nomigle, movimiento, calleIgle, colonia2Igle, municipioIgle, CodPostalI, FCreacion)
+    '            End If
+    '            connectionPast.Close()
+    '        Catch ex As Exception
+    '            LogIMMAMP.xmlIMMAMPLog("Error al Seleccionar Pastor: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
+    '        End Try
+    '    End Using
+    '    Return IDPastor1
+    'End Function
+    Sub BuscarPastor()
+        Dim commandTextT As String = "Select ID_Pastor From PASTOR Where Nombre_Pastor = '" & nompas & "' AND MOVIMIENTO = '" & movimiento & "' AND Nombre_Iglesia = '" & nomigle & "'"
+        Using connectionPast As New SqlConnection(CONEXION)
+            Dim commandIDPas As New SqlCommand(commandTextT, connectionPast)
+            commandIDPas.Parameters.Add("@Nombre", SqlDbType.VarChar)
+            commandIDPas.Parameters("@Nombre").Value = nompas
+            Try
+                Dim reader As SqlDataReader
+                connectionPast.Open()
+                reader = commandIDPas.ExecuteReader(CommandBehavior.CloseConnection)
+                While (reader.Read())
+                    IDPastor1 = reader("ID_Pastor")
+                End While
+                If IDPastor1 = Nothing Then
+                    CrearPastor(nompas, telIgle, telpastor, nomigle, movimiento, calleIgle, colonia2Igle, municipioIgle, CodPostalI, FCreacion)
+                End If
+                CrearAlumno()
+                connectionPast.Close()
+            Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al Seleccionar Pastor: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
+            End Try
+        End Using
+    End Sub
+    Sub CrearAlumno()
+        'INSERTA ALUMNOS
+        Dim sql1 As String
         Using connection As New SqlConnection(CONEXION)
-            sql = "INSERT INTO ALUMNO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,GENERO,OCUPACION,BAUTISMOAH2o,BAUTISMOES,ANIOSCONGREG,ESTATUS,FECHA_NACIMIENTO,EDAD," &
-                       "INSTRUMENTO,SEMESTRE)" &
+            sql1 = "INSERT INTO ALUMNO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,GENERO,OCUPACION,BAUTISMOH2o,BAUTISMOES,ANIOSCONGREG,ESTATUS,FECHA_NACIMIENTO,EDAD," &
+                       "INSTRUMENTO,SEMESTRE,ID_PASTOR,FECHACREACION)" &
                        "VALUES(@Nombre,@Apellido_Paterno,@Apellido_Materno,@Genero,@Ocupacion," &
-                       "@BautismH2O,@BautismoES,@AniosCongreg,@Estatus,@Fecha_Nacimiento,@Edad,@Intrumento,@Semestre)"
-            Dim command As New SqlCommand(sql, connection)
+                       "@BautismoH2O,@BautismoES,@AniosCongreg,@Estatus,@Fecha_Nacimiento,@Edad,@Intrumento,@Semestre,@IDPASTOR,@FECHA_CREACION)"
+            Dim command As New SqlCommand(sql1, connection)
             command.Parameters.Add("@Nombre", SqlDbType.VarChar)
             command.Parameters("@Nombre").Value = nombre
             command.Parameters.Add("@Apellido_Paterno", SqlDbType.VarChar)
@@ -161,147 +439,87 @@ Partial Class Admintrador_CrearPerfiles
             command.Parameters("@Genero").Value = gen
             command.Parameters.Add("@Ocupacion", SqlDbType.VarChar)
             command.Parameters("@Ocupacion").Value = ocup
-            command.Parameters.Add("@BautismH2O", SqlDbType.VarChar)
-            command.Parameters("@BautismH2O").Value = BautH2o
+            command.Parameters.Add("@BautismoH2O", SqlDbType.VarChar)
+            command.Parameters("@BautismoH2O").Value = BautH2o
             command.Parameters.Add("@BautismoES", SqlDbType.VarChar)
             command.Parameters("@BautismoES").Value = BautES
             command.Parameters.Add("@AniosCongreg", SqlDbType.VarChar)
             command.Parameters("@AniosCongreg").Value = AniosCongreg
             command.Parameters.Add("@EStatus", SqlDbType.VarChar)
             command.Parameters("@EStatus").Value = status
-            command.Parameters.Add("@Fecha_Nacimiento", SqlDbType.Date)
+            command.Parameters.Add("@Fecha_Nacimiento", SqlDbType.VarChar)
             command.Parameters("@Fecha_Nacimiento").Value = fechanac
-            command.Parameters.Add("@Edad", SqlDbType.VarChar)
+            command.Parameters.Add("@Edad", SqlDbType.Int)
             command.Parameters("@Edad").Value = edad
             command.Parameters.Add("@Intrumento", SqlDbType.VarChar)
             command.Parameters("@Intrumento").Value = instrumento
             command.Parameters.Add("@Semestre", SqlDbType.VarChar)
             command.Parameters("@Semestre").Value = Sem
-            'command.Parameters.Add("@Fijo", SqlDbType.VarChar)
-            'command.Parameters("@Fijo").Value = telefono
-            'command.Parameters.Add("@Celular", SqlDbType.VarChar)
-            'command.Parameters("@Celular").Value = celular
-            'command.Parameters.Add("@Calle", SqlDbType.VarChar)
-            'command.Parameters("@Calle").Value = calle
-            'command.Parameters.Add("@Colonia", SqlDbType.VarChar)
-            'command.Parameters("@Colonia").Value = colonia
-            'command.Parameters.Add("@Municipio", SqlDbType.VarChar)
-            'command.Parameters("@Municipio").Value = municipio
-            'command.Parameters.Add("@Cp", SqlDbType.VarChar)
-            'command.Parameters("@Cp").Value = CodPostal
-            'command.Parameters.Add("@Intrumento", SqlDbType.VarChar)
-            'command.Parameters("@Intrumento").Value = instrumento
+            command.Parameters.Add("@IDPASTOR", SqlDbType.VarChar)
+            command.Parameters("@IDPASTOR").Value = IDPastor1
+            command.Parameters.Add("@FECHA_CREACION", SqlDbType.VarChar)
+            command.Parameters("@FECHA_CREACION").Value = FCreacion
+            If IDPastor1 = Nothing Then
+                BuscarPastor()
+            End If
             Try
                 connection.Open()
                 command.ExecuteNonQuery()
                 connection.Close()
             Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al INSERTAR ALUMNO: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
                 errorr = ex.Message
             End Try
-            Using connection1 As New SqlConnection(CONEXION)
-                sql = "INSERT INTO CONTACTO (NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,CORREO,GENERO,EDOCIVIL,OCUPACION,TIPOCONTACTO,FECHA_NACIMIENTO,EDAD,FIJO,CELULAR,CALLE,COLONIA,MUNICIPIO,CP)" &
-                    "VALUES(@Nombre, @Apellido_Paterno, @Apellido_Materno, @Correo, @Genero ,@EdoCivil, @Ocupacion,@TipoContacto,@Fecha_Nacimiento" &
-                       "@Edad,@Fijo,@Celular,@Calle,@Colonia,@Municipio,@Cp)"
-                Dim command1 As New SqlCommand(sql, connection1)
-                command1.Parameters.Add("@Nombre", SqlDbType.VarChar)
-                command1.Parameters("@Nombre").Value = nombre
-                command1.Parameters.Add("@Apellido_Paterno", SqlDbType.VarChar)
-                command1.Parameters("@Apellido_Paterno").Value = apellidop
-                command1.Parameters.Add("@Apellido_Materno", SqlDbType.VarChar)
-                command1.Parameters("@Apellido_Materno").Value = apellidoM
-                command1.Parameters.Add("@Correo", SqlDbType.VarChar)
-                command1.Parameters("@Correo").Value = email
-                command1.Parameters.Add("@Genero", SqlDbType.VarChar)
-                command1.Parameters("@Genero").Value = gen
-                command1.Parameters.Add("@EdoCivil", SqlDbType.VarChar)
-                command1.Parameters("@EdoCivil").Value = EstadoCivil
-                command1.Parameters.Add("@Ocupacion", SqlDbType.VarChar)
-                command1.Parameters("@Ocupacion").Value = ocup
-                command1.Parameters.Add("@TipoContacto", SqlDbType.VarChar)
-                command1.Parameters("@TipoContacto").Value = tcont
-                command1.Parameters.Add("@Fecha_Nacimiento", SqlDbType.Date)
-                command1.Parameters("@Fecha_Nacimiento").Value = fechanac
-                command1.Parameters.Add("@Edad", SqlDbType.VarChar)
-                command1.Parameters("@Edad").Value = edad
-                command1.Parameters.Add("@Fijo", SqlDbType.VarChar)
-                command1.Parameters("@Fijo").Value = telefono
-                command1.Parameters.Add("@Celular", SqlDbType.VarChar)
-                command1.Parameters("@Celular").Value = celular
-                command1.Parameters.Add("@Calle", SqlDbType.VarChar)
-                command1.Parameters("@Calle").Value = calle
-                command1.Parameters.Add("@Colonia", SqlDbType.VarChar)
-                command1.Parameters("@Colonia").Value = colonia
-                command1.Parameters.Add("@Municipio", SqlDbType.VarChar)
-                command1.Parameters("@Municipio").Value = municipio
-                command1.Parameters.Add("@Cp", SqlDbType.VarChar)
-                command1.Parameters("@Cp").Value = CodPostal
-                Try
-                    connection.Open()
-                    command.ExecuteNonQuery()
-                    connection.Close()
-                Catch ex As Exception
-                    GeneradorLogsIMMAMP.xmlIMMAMPLog("Error al INSERTAR Contacto: " + ex.Message + "||" + "Detalle: " + ex.StackTrace, "")
-                End Try
-            End Using
-            'INSERT DATOS IGLESIA
-            Using connection2 As New SqlConnection(CONEXION)
-                    sql = "INSERT INTO IGLESIA (NOMBRE,MOVIMIENTO,FIJO,CELULAR,CALLE,COLONIA,MUNICIPIO,CP,ESTADO) VALUES (@Nombre,@Movimiento,@Fijo,@Celular,@Calle,@Colonia,@Municipio,@Cp,@Estado)"
-                    Dim command2 As New SqlCommand(sql, connection2)
-                    command2.Parameters.Add("@Nombre", SqlDbType.VarChar)
-                    command2.Parameters("@Nombre").Value = nomigle
-                    command2.Parameters.Add("@Movimiento", SqlDbType.VarChar)
-                    command2.Parameters("@Movimiento").Value = movimiento
-                    command2.Parameters.Add("@Fijo", SqlDbType.VarChar)
-                    command2.Parameters("@Fijo").Value = telIgle
-                    command2.Parameters.Add("@Celular", SqlDbType.VarChar)
-                    command2.Parameters("@Celular").Value = telpastor
-                    command2.Parameters.Add("@Calle", SqlDbType.VarChar)
-                    command2.Parameters("@Calle").Value = calleIgle
-                    command2.Parameters.Add("@Colonia", SqlDbType.VarChar)
-                    command2.Parameters("@Colonia").Value = colonia2Igle
-                    command2.Parameters.Add("@Municipio", SqlDbType.VarChar)
-                    command2.Parameters("@Municipio").Value = municipioIgle
-                    command2.Parameters.Add("@Cp", SqlDbType.VarChar)
-                    command2.Parameters("@Cp").Value = CodPostalI
-                    command2.Parameters.Add("@Estado", SqlDbType.VarChar)
-                    command2.Parameters("@Estado").Value = estadoIgle
-                    Try
-                        connection2.Open()
-                        command2.ExecuteNonQuery()
-                        connection.Close()
-                    Catch ex As Exception
-                        errorr = ex.Message
-                    End Try
-                End Using
-                'DATOS PASTOR
-                Using connection3 As New SqlConnection(CONEXION)
-                    sql = "INSERT INTO PASTOR (NOMBRE,FIJO,CELULAR) VALUES (@Nombre,@Fijo,@Celular)"
-                    Dim command3 As New SqlCommand(sql, connection3)
-                    command3.Parameters.Add("@Nombre", SqlDbType.VarChar)
-                    command3.Parameters("@Nombre").Value = nompas
-                    command3.Parameters.Add("@Fijo", SqlDbType.Int)
-                    command3.Parameters("@Fijo").Value = telIgle
-                    command3.Parameters.Add("@Celular", SqlDbType.Int)
-                    command3.Parameters("@Celular").Value = telpastor
-                    If telIgle = Nothing Then
-                        telIgle = "'SIN NUMERO'"
-                    End If
-                    If telpastor = Nothing Then
-                        telpastor = "'SIN NUMERO'"
-                    End If
-
-                    Try
-                        connection3.Open()
-                        command3.ExecuteNonQuery()
-                        connection.Close()
-                    Catch ex As Exception
-                        errorr = ex.Message
-                    End Try
-                End Using
-            End Using
-            Response.Redirect("../Administrador/AlumnosCreado.aspx")
+        End Using
     End Sub
-    'LLENADO DE DATOS DEL CONTACTO Colonias
+    Function CrearPastor(nompas As String, telIgle As String, telpastor As String, nomigle As String, movimiento As String, calleIgle As String, colonia2Igle As String, municipioIgle As String, CodPostalI As String, FCreacion As String) As String
+        'CREACION PASTOR
+        Dim sql4 As String
+        Using connection3 As New SqlConnection(CONEXION)
+            sql4 = "INSERT INTO PASTOR (NOMBRE_PASTOR,TELEFONO_PASTOR,NOMBRE_IGLESIA,MOVIMIENTO,TELEFONO_IGLESIA,DIRECCION_IGLESIA,NoExt,NoInt,COLONIA,MUNICIPIO,CP,FechaCreacion) " &
+                              "VALUES (@NombrePastor,@TelefonoPastor,@NombreIglesia,@Movimiento,@TelefonoIglesia,@DIRECCIONIGLESIA,@No_Ext,@No_Int,@Colonia,@Municipio,@Cp,@FECHACREACION)"
+            Dim command3 As New SqlCommand(sql4, connection3)
+            command3.Parameters.Add("@NombrePastor", SqlDbType.VarChar)
+            command3.Parameters("@NombrePastor").Value = nompas
+            command3.Parameters.Add("@TelefonoPastor", SqlDbType.VarChar)
+            command3.Parameters("@TelefonoPastor").Value = telpastor
+            command3.Parameters.Add("@NombreIglesia", SqlDbType.VarChar)
+            command3.Parameters("@NombreIglesia").Value = nomigle
+            command3.Parameters.Add("@Movimiento", SqlDbType.VarChar)
+            command3.Parameters("@Movimiento").Value = movimiento
+            command3.Parameters.Add("@TelefonoIglesia", SqlDbType.VarChar)
+            command3.Parameters("@TelefonoIglesia").Value = telIgle
+            command3.Parameters.Add("@DIRECCIONIGLESIA", SqlDbType.VarChar)
+            command3.Parameters("@DIRECCIONIGLESIA").Value = calleIgle
+            command3.Parameters.Add("@No_Ext", SqlDbType.VarChar)
+            command3.Parameters("@No_Ext").Value = noExtIgle
+            command3.Parameters.Add("@No_Int", SqlDbType.VarChar)
+            command3.Parameters("@No_Int").Value = noIntIgle
+            command3.Parameters.Add("@Colonia", SqlDbType.VarChar)
+            command3.Parameters("@Colonia").Value = colonia2Igle
+            command3.Parameters.Add("@Municipio", SqlDbType.VarChar)
+            command3.Parameters("@Municipio").Value = municipioIgle
+            command3.Parameters.Add("@Cp", SqlDbType.VarChar)
+            command3.Parameters("@Cp").Value = CodPostalI
+            command3.Parameters.Add("@FECHACREACION", SqlDbType.VarChar)
+            command3.Parameters("@FECHACREACION").Value = FCreacion
+            If telIgle = Nothing Then
+                telIgle = "'SIN NUMERO'"
+            End If
+            If telpastor = Nothing Then
+                telpastor = "'SIN NUMERO'"
+            End If
+            Try
+                connection3.Open()
+                command3.ExecuteNonQuery()
+                connection3.Close()
+            Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al INSERTAR Pastor: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
+                errorr = ex.Message
+            End Try
+        End Using
+        Return nompas
+    End Function
     <WebMethod>
     Public Shared Function cargaCp(ByVal CPostal As String) As String()
         Dim CodPos As String = ""
@@ -312,7 +530,7 @@ Partial Class Admintrador_CrearPerfiles
         Dim errorr As String
         Dim connectionString = "Data Source = DAVE-PC; Initial Catalog = IMMAMP; Integrated Security = True"
         Using connection As New SqlConnection(connectionString)
-            sql = "Select * From CATDIRECCIONES where CODIGO_POSTAL = @CPostal"
+            sql = "Select * From CAT_DIRECCIONES where CODIGO_POSTAL = @CPostal"
             Dim command As New SqlCommand(sql, connection)
             command.Parameters.Add("@CPostal", SqlDbType.Int)
             command.Parameters("@CPostal").Value = CPostal
@@ -328,6 +546,7 @@ Partial Class Admintrador_CrearPerfiles
                 End If
                 connection.Close()
             Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al Buscar CATDIRECCIONES: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
                 errorr = "Error CP Inexistente:("
             End Try
         End Using
@@ -342,7 +561,7 @@ Partial Class Admintrador_CrearPerfiles
         Dim errorr1 As String = "ingresa cp valido"
         Dim connectionString = "Data Source = DAVE-PC; Initial Catalog = IMMAMP; Integrated Security = True"
         Using connection As New SqlConnection(connectionString)
-            Dim sql = "Select CODIGO_POSTAL,COLONIA From CATDIRECCIONES where CODIGO_POSTAL = @CPostal"
+            Dim sql = "Select CODIGO_POSTAL,COLONIA From CAT_DIRECCIONES where CODIGO_POSTAL = " & CPostal
             Dim command As New SqlCommand(sql, connection)
             command.Parameters.Add("@CPostal", SqlDbType.Int)
             command.Parameters("@CPostal").Value = CPostal
@@ -356,9 +575,11 @@ Partial Class Admintrador_CrearPerfiles
                     OptionCol &= "<Option value='" & reader("COLONIA") & "'>" & reader("COLONIA") & "</option>"
                 End While
             Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al Buscar Colonias: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
                 errorr1 = ex.Message
             End Try
         End Using
+
         Return OptionCol
     End Function
 
@@ -376,7 +597,7 @@ Partial Class Admintrador_CrearPerfiles
         Dim errorr As String
         Dim connectionString = "Data Source = DAVE-PC; Initial Catalog = IMMAMP; Integrated Security = True"
         Using connection As New SqlConnection(connectionString)
-            sql = "Select * From CATDIRECCIONES where CODIGO_POSTAL = @CPostal"
+            sql = "Select * From CAT_DIRECCIONES where CODIGO_POSTAL = @CPostal"
             Dim command As New SqlCommand(sql, connection)
             command.Parameters.Add("@CPostal", SqlDbType.Int)
             command.Parameters("@CPostal").Value = CPostalI
@@ -393,6 +614,7 @@ Partial Class Admintrador_CrearPerfiles
                 End If
                 connection.Close()
             Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al Buscar CP: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
                 errorr = ex.Message
             End Try
         End Using
@@ -407,7 +629,7 @@ Partial Class Admintrador_CrearPerfiles
         Dim errorr1 As String = ""
         Dim connectionString = "Data Source = DAVE-PC; Initial Catalog = IMMAMP; Integrated Security = True"
         Using connection As New SqlConnection(connectionString)
-            Dim sql = "Select CODIGO_POSTAL,COLONIA From CATDIRECCIONES where CODIGO_POSTAL = @CPostal"
+            Dim sql = "Select CODIGO_POSTAL,COLONIA From CAT_DIRECCIONES where CODIGO_POSTAL = @CPostal"
             Dim command As New SqlCommand(sql, connection)
             command.Parameters.Add("@CPostal", SqlDbType.Int)
             command.Parameters("@CPostal").Value = CPostalI
@@ -421,6 +643,7 @@ Partial Class Admintrador_CrearPerfiles
                     OptionCol &= "<Option value='" & reader("COLONIA") & "'>" & reader("COLONIA") & "</option>"
                 End While
             Catch ex As Exception
+                LogIMMAMP.xmlIMMAMPLog("Error al Buscar Colonias Iglesia: " + ex.Message + "||" + "Detalle: " + ex.StackTrace)
                 errorr1 = ex.Message
             End Try
         End Using
@@ -428,6 +651,5 @@ Partial Class Admintrador_CrearPerfiles
     End Function
 
 End Class
-'Carga Datos Iglesia
 
 

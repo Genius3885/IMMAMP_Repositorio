@@ -18,7 +18,7 @@ ul#menu-horizontal ul {
     left: 0;
     margin: 0;
     padding: 0;
-    background: #FFFFFF;
+    background: #00000070;
 }
 .carousel-inner img {
     width: 100%;
@@ -91,7 +91,7 @@ img.derecha {
 
 .topnav {
     overflow: hidden;
-    background-color: #3333;
+    background-color: #33333375;
 }
 
 .topnav a {
@@ -103,12 +103,12 @@ img.derecha {
         font-size: 20px;
  }
 
-.topnav a:hover {
-            background-color: #dddd;
-            color: black;
-}
+    .topnav a:hover {
+        background-color: #17a2b866;
+        color: white;
+    }
 
-.topnav a.active {
-            background-color: #4CAF50;
-            color: white;
-}
+    .topnav a.active {
+        background-color: 4caf77;
+        color: white;
+    }

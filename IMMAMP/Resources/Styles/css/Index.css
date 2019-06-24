@@ -1,7 +1,4 @@
-﻿* {
-    padding: 0;
-    margin: 0;
-}
+﻿
 
 p {
     margin-bottom: 20px;
@@ -14,19 +11,11 @@ p {
 }
 
 header {
-    background: rgba(0,0,0,0.9);
+    background: #00000070;
     /*width: 100%;*/
     position: fixed;
     z-index: 10;
 }
-
-.imgNota {
-    background-image: url('../../images/point.png');
-    background-position: center center;
-    background-repeat: repeat;
-    background-size: 8px;
-}
-
 dsaadsnav {
     float: left; /* Desplazamos el nav hacia la izquierda */
 }

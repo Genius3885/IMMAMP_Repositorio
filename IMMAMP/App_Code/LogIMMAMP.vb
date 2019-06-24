@@ -1,6 +1,7 @@
-﻿Imports System.IO
-Imports Microsoft.VisualBasic
-Public Class GeneradorLogsIMMAMP
+﻿Imports Microsoft.VisualBasic
+Imports System.IO
+
+Public Class LogIMMAMP
     'LOG ERRORES
     Public Shared Sub xmlIMMAMPLog(ByVal sMsg As String)
         Dim fechaHoy As DateTime = DateTime.Today

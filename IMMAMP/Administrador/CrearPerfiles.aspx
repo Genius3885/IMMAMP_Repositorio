@@ -5,17 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <%--<link href="../Resources/Styles/css/bootstrap.min.css" rel="stylesheet" />--%>
-
+    <link href="Resources/Styles/Header.css" rel="stylesheet" />
     <link href="../Resources/Styles/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shotcut icon" href="../Resources/images/immamp.png" />
     <link href="../Resources/Styles/Admin.css" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>IMMAMP-CREAR-USUARIOS</title>
-    <script src="../Resources/Scripts/ValidaCrearPerfiles.js"></script>
-    <script src="../Resources/Scripts/CalculaEdad.js"></script>
-    <script src="../Resources/scripts/jquery-2.1.1.min.js" async="async"></script>
-    <script src="../Resources/scripts/General/jquery-ui-1.10.2.custom.js" async="async"></script>
-    <script src="../Resources/scripts/Validadores.js" async="async"></script>
+    <script src="../Resources/Scripts/ValidaCrearPerfiles.js?1"></script>
+    <script src="../Resources/Scripts/CalculaEdad.js?2"></script>
+    <script src="../Resources/scripts/jquery-2.1.1.min.js?3" async="async"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="../Resources/scripts/General/jquery-ui-1.10.2.custom.js?4" async="async"></script>
+    <script src="../Resources/scripts/Validadores.js5?" async="async"></script>
+    
 </head>
 
 <%--<script>
@@ -44,20 +46,12 @@
     }
 </script>--%>
 <body>
-
+    <div class="loader"></div>
     <!-- #include file ="/Globales/Header.aspx" -->
     <div class="main">
-        <form runat="server">
+        <form runat="server" onkeypress="if (event.keyCode == 13) event.returnValue = false;" >
             <h1 style="color: #092740c4; text-align: center">Crear Usuarios</h1>
-            <%-- <div id="opcionMultiple" style="aling-center: -63; margin-left: auto; margin-right: auto; display: block; width: 482px; margin-bottom: 20px;">
-                    <input type="hidden" runat="server" name="validaTipoPerfil" id="validaTipoPerfil" value="0" />
-                    <a id="btnAlum" ng-click="hasPerfil1 = true; hasPerfil2 = false ; hasPerfil3 = false; hasPerfil4 = false; hasPerfil5 = false; hasPerfil6 = false;" ng-class="{'active':hasPerfil1}" class="btn btn-circle" onclick="validaTipoPerfil(0);document.getElementById('validaTipoPerfil').value='0'"></a><span>Alumno</span>
-                    <a id="btnProf" ng-click="hasPerfil1 = false; hasPerfil2 = true ; hasPerfil3 = false ; hasPerfil4 = false ; hasPerfil5 = false ;  hasPerfil6 = false ;" ng-class="{'active':hasPerfil2}" class="btn btn-circle" onclick="validaTipoPerfil(1);document.getElementById('validaTipoPerfil').value='1'"></a><span>Profesor</span>
-                    <a id="btnAdmin" ng-click="hasPerfil1 = false; hasPerfil2 = false ; hasPerfil3 = true ; hasPerfil4 = false ; hasPerfil5 = false ; hasPerfil6 = false ;" ng-class="{'active':hasPerfil3}" class="btn btn-circle" onclick="validaTipoPerfil(2);document.getElementById('validaTipoPerfil').value='2'"></a><span>Menor De Edad</span>
-                </div>--%>
-
             <div class="col-md-8 offset-2  col-xs-12 col-sm-8 offset-sm-2 offset-xs-0 form-group pointer-event">
-
                 <div class="col-md-6 col-sm-6 offset-md-3 col-xs-12 form-group">
                     <div class="field">
                         <input type="text" style="text-transform: uppercase;" name="nombre" id="nombre" placeholder="NOMBRE" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
@@ -85,6 +79,7 @@
                 <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12 form-group">
                     <asp:DropDownList ID="Semestre" name="Semestre" runat="server" class="form-control">
                         <asp:ListItem Value='SELECCIONASEM'>SELECCIONA SEMESTRE</asp:ListItem>
+                        <asp:ListItem Value='PROPEDEUTICO'>PROPEDEUTICO</asp:ListItem>
                         <asp:ListItem Value='PRIMERO'>PRIMERO</asp:ListItem>
                         <asp:ListItem Value='SEGUNDO'>SEGUNDO</asp:ListItem>
                         <asp:ListItem Value='TERCERO'>TERCERO</asp:ListItem>
@@ -103,8 +98,8 @@
                     </asp:DropDownList>
                     <div class="error light" id="edoCivileRROR"></div>
                 </div>
-                <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12 form-group">
-                    <asp:DropDownList ID="ocupacion" name="ocupacion" runat="server" class="form-control">
+                <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12 form-group" >
+                    <asp:DropDownList ID="ocupacion" name="ocupacion" runat="server" class="form-control" onblur="ValidaCombos(this)">
                         <asp:ListItem Value='OCUPACION'>OCUPACIÓN</asp:ListItem>
                         <asp:ListItem Value='ESTUDIANTE'>ESTUDIANTE</asp:ListItem>
                         <asp:ListItem Value='TRABAJADOR'>TRABAJADOR</asp:ListItem>
@@ -195,21 +190,38 @@
                 <select name="anio" id="anio" class="col-md-6 offset-md-3 col-sm-6 col-xs-12 form-group form-control" onblur="CalculaEdad();"></select>
                 <div class="error light" id="anioError"></div>
                 <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12 form-group">
-                    <input type="text" name="edad" id="edad" class="form-control" placeholder="Edad" maxlength="3" onblur="validaformulario(this.id);" />
+                    <input type="text" name="edad" id="edad" class="form-control" placeholder="Edad" maxlength="3" onblur="validaformulario(this.id);TutorEstudiante(this);"/>
                     <div class="error light" id="edadError"></div>
                 </div>
             </div>
             <div class="col-md-8 offset-md-2 col-sm-6  col-xs-12 col-sm-8 offset-sm-2 offset-xs-0 form-group pointer-event">
                 <h2 style="color: #092740c4; text-align: center; font-size: 30px;">Datos Contacto</h2>
                 <div>
+                    <%--SECCION ESTUDIANTE O TUTOR--%>
+                    <div class="col-md-6 col-sm-6 offset-md-3 col-xs-12 form-group">
+                    <div class="field">
+                        <h6 id="tutor" style="display:none;color:red">Obligatorio Tutor *</h6>
+                        <input type="text" style="display: none;text-transform: uppercase;" name="nombretutor" id="nombreTutor" placeholder="NOMBRE TUTOR" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
+                    </div>
+                </div>
+                <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12 form-group">
+                    <div class="field">
+                        <input type="text" style="display: none;text-transform: uppercase;" name="apellidoPTutor" id="apellidoPTutor" placeholder="APELLIDO PATERNO TUTOR" class="form-control" maxlength="100" onblur="validaformulario(this.id);" />
+                    </div>
+                </div>
+                <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12 form-group">
+                    <div class="field">
+                        <input type="text" style="display: none;text-transform: uppercase;" name="apellidoMTutor" id="apellidoMTutor" placeholder="APELLIDO MATERNO TUTOR" class="form-control" maxlength="100" onblur="validaformulario(this.id); " />
+                    </div>
+                </div>
                     <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12">
-                        <div class="field" style="height: 60px">
+                        <div class="field" style="height: 60px"; id="field">
                             <input type="text" name="BautAgua" id="BautAgua" style="padding-left: initial;" placeholder="INGRESA AÑO BAUTISMO EN AGUA" maxlength="4" class="form-control" onblur="validaformulario(this.id);" />
                             <div class="error light" id="BautAguaError"></div>
                         </div>
                     </div>
                     <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12">
-                        <div class="field" style="height: 60px">
+                        <div class="field" style="height: 60px"; id="field1">
                             <input type="text" name="BautES" id="BautES" placeholder="INGRESA AÑO BAUTISMO EN ESPIRITU SANTO" maxlength="4" class="form-control" onblur="validaformulario(this.id);" />
                             <div class="error light" id="BautESerror"></div>
                         </div>
@@ -227,16 +239,18 @@
                             <div class="error light" id="tiempocongreganteError"></div>
                         </div>
                     </div>
-                    <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12">
+                    <%--<div class="col-md-6 offset-md-3 col-sm-6 col-xs-12">
                         <div class="field">
-                            <select name="tiempocongregante" id="tipocont" class="form-control" runat="server">
+                            <select name="tiempocongregante" id="tipocont" class="form-control" runat="server" onchange="TutorEstudiante(this)">
                                 <option value="select">¿ERES ESTUDIANTE O TUTOR?</option>
                                 <option value="ESTUDIANTE">ESTUDIANTE</option>
                                 <option value="TUTOR">TUTOR</option>
                             </select>
                             <div class="error light" id="tiempocongreganteError"></div>
                         </div>
-                    </div>
+                    </div>--%>
+                    
+                    <%--<h1>TELEFONO CONTACTO</h1>--%>
                     <%--Telefono y Celular--%>
                     <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12">
                         <div class="field" style="height: 60px">
@@ -279,7 +293,7 @@
                     <!--Colonia-->
                     <div class="col-md-6 offset-md-3 col-sm-6">
                         <div class="field">
-                            <select name="colonia" id="colonia" class="form-control">
+                            <select name="colonia" id="colonia" class="form-control" style="text-transform:uppercase">
                                 <option value='select'>Selecciona Colonia</option>
                             </select>
                         </div>
@@ -339,7 +353,7 @@
                 </div>
 
                 <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12">
-                    <input type="text" name="calcalleIglele" id="calleIgle" placeholder="CALLE IGLESIA" class="form-control" maxlength="100" />
+                    <input type="text" name="calleIgle" id="calleIgle" placeholder="CALLE IGLESIA" class="form-control" maxlength="100" />
                     <div class="error light" id="calleIError"></div>
                 </div>
                 <%--No Ext / Int / CP--%>
@@ -377,12 +391,12 @@
                         <div class="error light" id="estadoIgleError" style="height: 30px; width: 50%; margin-left: auto; margin-right: auto;"></div>
                     </div>
                 <div class="col-md-6 offset-md-3 col-sm-6 col-xs-12">
-                    <div class="file1" style="width: 87%; margin-left: auto; margin-right: auto;">
+                    <div class="file1" style="width: 87%; margin-left: auto; margin-right: auto;display:none">
                         <input type="file" id="DocumentoRecot" name="DocumentoRecot" onblur="validacion(this.id,'vacio','Documento',0);" class="width:100px;color:#446655;display: inline;" runat="server" style="width: 293px; opacity: 0; height: 89px;" />
                         <div style="display: none;" class="error light" id="DocumentoRecotError"></div>
                     </div>
                     <div class="col-md-12" style="margin-top: 50px;">
-                        <asp:Button runat="server" type="button" ID="crearUser" class="crearUser" value="CrearAlumno" OnClick="CargaDatosEstudiante" Onblur="" Text="Crear Alumno"></asp:Button>
+                        <asp:Button runat="server" type="button" ID="crearUser" class="crearUser " value="CrearAlumno" OnClick="CargaDatosEstudiante" Onblur="" Text="Crear Alumno"></asp:Button>
                     </div>
                 </div>
             </div>
@@ -487,9 +501,14 @@
         function ComboAno() {
             var n = (new Date()).getFullYear()
             var select = document.getElementById("anio");
-            for (var i = n; i >= 1900; i--)select.options.add(new Option(i, i));
+            for (var i = n; i >= 1920; i--)select.options.add(new Option(i, i));
         };
         window.onload = ComboAno;
     </script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $(".loader").fadeOut("slow");
+        });
+</script>
 </body>
 </html>

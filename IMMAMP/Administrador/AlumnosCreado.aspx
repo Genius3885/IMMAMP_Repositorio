@@ -19,10 +19,15 @@
     <script src="../Resources/scripts/jquery-2.1.1.min.js" async="async"></script>
     <script src="../Resources/scripts/General/jquery-ui-1.10.2.custom.js" async="async"></script>
     <script src="../Resources/scripts/Validadores.js" async="async"></script>
+     <script type="text/javascript">
+        $(window).load(function () {
+            $(".loader").fadeOut("slow");
+        });
+</script>
 </head>
-<body>
+<body class="">
     <!-- #include file ="/Globales/Header.aspx" -->
-    <div class="main">
+    <div class="main ">
         <form runat="server">
             <div style="padding-top: 200px;" class="col-md-8 offset-2  col-xs-12 form-group">
                 <p style="font-size: 70px; color: black;">¡Se a creado el Registro de Manera Exitosa! </p>
@@ -32,6 +37,6 @@
             </div>
         </form>
     </div>
-    <!-- #include file ="/Globales/footer.aspx" -->
 </body>
+    
 </html>

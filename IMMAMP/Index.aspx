@@ -7,43 +7,41 @@
     <link href="Resources/Styles/css/Index.css" rel="stylesheet" />
     <link href="Resources/Styles/HeaderIndex.css" rel="stylesheet" />
     <link rel="shotcut icon" href="../Resources/images/immamp.png" />
-    <link href="../Resources/Styles/HeaderIndex.css" rel="stylesheet" />
+    <link href="Resources/Styles/Header.css" rel="stylesheet" />
     <link href="../Resources/Styles/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <script src="../Resources/scripts/jquery-2.1.1.min.js" async="async"></script>
     <script src="../Resources/scripts/General/jquery-ui-1.10.2.custom.js" async="async"></script>
     <meta name="IMMAMP" content="IMMAMP,immamp, instituto de musica aquiles mireles perales, aquiles mireles perales, instituto de musica portales, instituto de musica plantel central" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>IMMAMP</title>
 </head>
 <!-- #include file ="/Globales/HeaderIndex.aspx" -->
 <%--<body class="imgFondo" style="background-color: #004060;">--%>
-   <body class="imgNota" style="background-color: #004060;">
-
-    <div class="">
-        <div class="">
-            <div class="col-md-2 col-xs-12" style="height: 250px;">
-                <img src="Resources/images/IMMAMP1.jpg" style="padding-top: 60px; border-radius: 20px" class="rounded" alt="Cinque Terre" />
-            </div>
+<body class="imgNota">
+        <div class="col-md-12">
+            <p><a name="Inicio" id="Inicio"></a></p>
+            <p><a href="#fin" style="border-bottom-color: azure; height: 10px; width: 10px;">Ir al Final</a></p>
             <div class="col-md-12">
                 <div class="container" style="background-color: #a1e8ea94; border-radius: 6px;">
                     <div class="row">
                         <div style="text-align: center; margin-left: auto; margin-right: auto;" class="col-md-4">
+
                             <h3>NOSOTROS</h3>
-                            <p>Materias que nos forman ministerialmente y tienen por lo tanto, </p>
-                            <p>el objeto de darle la mayor gloria a Dios.</p>
+                            <p>Materias que nos forman ministerialmente y tienen por lo tanto, 
+                            el objeto de darle la mayor gloria a Dios.</p>
                         </div>
                         <div style="text-align: center; margin-left: auto; margin-right: auto;" class="col-md-4">
                             <h3>HISTORIA</h3>
-                            <p>IMMAMP surge en el año de 1983 </p>
-                            <p>Llenar un vacío pues no había ministros de música</p>
-                            <p>el ministerio musical no existía en toda la ICIAR,</p>
-                            <p>sólo en la iglesia de Portales</p>
-
+                            <p>IMMAMP surge en el año de 1983 
+                            Llenar un vacío pues no había ministros de música
+                            el ministerio musical no existía en toda la ICIAR
+                            sólo en la iglesia de Portales</p>
+                            <a href="../IMMAMP/HIstoria.aspx" target="_blank" style="color: white">MAS...</a>
                         </div>
                     </div>
                 </div>
@@ -105,10 +103,10 @@
                 <span class="carousel-control-next-icon"></span>
             </a>
         </div>
-
+        <p><a name="fin" id="fin"></a></p>
+        <p><a href="#Inicio">Ir al Inicio</a></p>
         <div class="col-md-12">
         </div>
-    </div>
     <!-- #include file ="/Globales/footer.aspx" -->
 </body>
 </html>
